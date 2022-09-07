@@ -16,7 +16,7 @@ void SPI_Command_Init(void)
     SPI_InitStruct.SPI_FirstBit = SPI_FirstBit_MSB;
     SPI_InitStruct.SPI_Mode = SPI_Mode_Master;
     SPI_InitStruct.SPI_NSS = SPI_NSS_Soft;
-	  SPI_InitStruct.SPI_CRCPolynomial = 7;
+	  //SPI_InitStruct.SPI_CRCPolynomial = 7;
     SPI_Init(SPI1, &SPI_InitStruct); 
     SPI_Cmd(SPI1, ENABLE);
  

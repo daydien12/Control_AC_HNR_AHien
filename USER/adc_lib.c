@@ -79,6 +79,7 @@ uint16_t ADC_Read_One_Channel(const _adc_channel_e ADC_Channel, const uint32_t A
 void ADC_Read_All(uint16_t *_adc_arr_data_)
 {
   ADC1->SMPR = ADC_SampleTime_1_5Cycles;
+	
 	switch (channel_read_all)
 	{
 		case ADC_Channel_0_OUT_ADC_1:
