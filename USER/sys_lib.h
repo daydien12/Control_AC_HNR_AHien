@@ -45,6 +45,8 @@ typedef struct
 {
 	uint16_t count_time_1s;
 	uint8_t  flag_time_1s;
+	uint16_t count_time_20ms;
+	uint8_t  flag_time_20ms;
 }_time_t;
 
 typedef struct
@@ -61,6 +63,17 @@ typedef struct
 	uint8_t  flag_stanby;
 }_sys_value_t;
 
+typedef struct 
+{
+	uint8_t status_sig;
+	uint16_t volt_in;
+	uint16_t amp_in;
+	uint16_t volt_out1;
+	uint16_t volt_out2;
+	uint8_t value_temp;
+	uint8_t value_freq;
+	uint8_t	byte_zero;
+}spi_struct_type_t;
 
 
 void SYS_Init_ALL(void);

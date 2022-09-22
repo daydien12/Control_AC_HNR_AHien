@@ -1,7 +1,7 @@
 Dependencies for Project 'Project_mau', Target 'Project': (DO NOT MODIFY !)
 F (..\USER\main.c)(0x6301B323)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\Device\Include -I..\Libraries\CMSIS\Include -I..\Libraries\STM32F0xx_StdPeriph_Driver\inc -I..\MDK -I..\USER -I..\Libraries\STM32F0xx_StdPeriph_Driver\src -I..\Libraries\Utilities\STM32F072B-Discovery-I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include-D__UVISION_VERSION="517" -DSTM32F030x6 -DUSE_STDPERIPH_DRIVER -DSTM32F072-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
-I (..\USER\sys_lib.h)(0x631822FC)
-I (..\USER\stm32f0xx.h)(0x630A1D01)
+I (..\USER\sys_lib.h)(0x632AE7BE)
+I (..\USER\stm32f0xx.h)(0x631EBCD2)
 I (..\Libraries\CMSIS\Include\core_cm0.h)(0x52D7F961)
 I (C:\Keil_v517\ARM\ARMCC\include\stdint.h)(0x55DB3990)
 I (..\Libraries\CMSIS\Include\core_cmInstr.h)(0x52D7F961)
@@ -38,9 +38,9 @@ I (..\USER\uart.h)(0x6301B297)
 I (..\USER\ct_lib.h)(0x6300EAF9)
 I (..\USER\motor_lib.h)(0x6301BE71)
 I (..\USER\spi_lib.h)(0x63024E91)
-I (..\USER\adc_lib.h)(0x63170BFC)
+I (..\USER\adc_lib.h)(0x632AE778)
 F (..\USER\Delay.c)(0x6301FCC9)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\Device\Include -I..\Libraries\CMSIS\Include -I..\Libraries\STM32F0xx_StdPeriph_Driver\inc -I..\MDK -I..\USER -I..\Libraries\STM32F0xx_StdPeriph_Driver\src -I..\Libraries\Utilities\STM32F072B-Discovery-I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include-D__UVISION_VERSION="517" -DSTM32F030x6 -DUSE_STDPERIPH_DRIVER -DSTM32F072-o .\objects\delay.o --omf_browse .\objects\delay.crf --depend .\objects\delay.d)
-I (..\USER\stm32f0xx.h)(0x630A1D01)
+I (..\USER\stm32f0xx.h)(0x631EBCD2)
 I (..\Libraries\CMSIS\Include\core_cm0.h)(0x52D7F961)
 I (C:\Keil_v517\ARM\ARMCC\include\stdint.h)(0x55DB3990)
 I (..\Libraries\CMSIS\Include\core_cmInstr.h)(0x52D7F961)
@@ -104,7 +104,7 @@ I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_syscfg.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_tim.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_wwdg.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_misc.h)(0x52D7F99A)
-I (..\USER\stm32f0xx.h)(0x630A1D01)
+I (..\USER\stm32f0xx.h)(0x631EBCD2)
 F (..\USER\ct_lib.c)(0x63020244)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\Device\Include -I..\Libraries\CMSIS\Include -I..\Libraries\STM32F0xx_StdPeriph_Driver\inc -I..\MDK -I..\USER -I..\Libraries\STM32F0xx_StdPeriph_Driver\src -I..\Libraries\Utilities\STM32F072B-Discovery-I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include-D__UVISION_VERSION="517" -DSTM32F030x6 -DUSE_STDPERIPH_DRIVER -DSTM32F072-o .\objects\ct_lib.o --omf_browse .\objects\ct_lib.crf --depend .\objects\ct_lib.d)
 I (..\USER\ct_lib.h)(0x6300EAF9)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_usart.h)(0x52D7F99A)
@@ -137,12 +137,12 @@ I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_syscfg.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_tim.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_wwdg.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_misc.h)(0x52D7F99A)
-I (..\USER\stm32f0xx.h)(0x630A1D01)
+I (..\USER\stm32f0xx.h)(0x631EBCD2)
 I (..\USER\Delay.h)(0x62FE4ED1)
 I (..\USER\pin_define.h)(0x6306B5BE)
 F (..\USER\motor_lib.c)(0x63158D78)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\Device\Include -I..\Libraries\CMSIS\Include -I..\Libraries\STM32F0xx_StdPeriph_Driver\inc -I..\MDK -I..\USER -I..\Libraries\STM32F0xx_StdPeriph_Driver\src -I..\Libraries\Utilities\STM32F072B-Discovery-I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include-D__UVISION_VERSION="517" -DSTM32F030x6 -DUSE_STDPERIPH_DRIVER -DSTM32F072-o .\objects\motor_lib.o --omf_browse .\objects\motor_lib.crf --depend .\objects\motor_lib.d)
 I (..\USER\motor_lib.h)(0x6301BE71)
-I (..\USER\stm32f0xx.h)(0x630A1D01)
+I (..\USER\stm32f0xx.h)(0x631EBCD2)
 I (..\Libraries\CMSIS\Include\core_cm0.h)(0x52D7F961)
 I (C:\Keil_v517\ARM\ARMCC\include\stdint.h)(0x55DB3990)
 I (..\Libraries\CMSIS\Include\core_cmInstr.h)(0x52D7F961)
@@ -175,9 +175,9 @@ I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_wwdg.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_misc.h)(0x52D7F99A)
 I (..\USER\pin_define.h)(0x6306B5BE)
 I (..\USER\Delay.h)(0x62FE4ED1)
-F (..\USER\sys_lib.c)(0x63184202)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\Device\Include -I..\Libraries\CMSIS\Include -I..\Libraries\STM32F0xx_StdPeriph_Driver\inc -I..\MDK -I..\USER -I..\Libraries\STM32F0xx_StdPeriph_Driver\src -I..\Libraries\Utilities\STM32F072B-Discovery-I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include-D__UVISION_VERSION="517" -DSTM32F030x6 -DUSE_STDPERIPH_DRIVER -DSTM32F072-o .\objects\sys_lib.o --omf_browse .\objects\sys_lib.crf --depend .\objects\sys_lib.d)
-I (..\USER\sys_lib.h)(0x631822FC)
-I (..\USER\stm32f0xx.h)(0x630A1D01)
+F (..\USER\sys_lib.c)(0x632AE92F)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\Device\Include -I..\Libraries\CMSIS\Include -I..\Libraries\STM32F0xx_StdPeriph_Driver\inc -I..\MDK -I..\USER -I..\Libraries\STM32F0xx_StdPeriph_Driver\src -I..\Libraries\Utilities\STM32F072B-Discovery-I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include-D__UVISION_VERSION="517" -DSTM32F030x6 -DUSE_STDPERIPH_DRIVER -DSTM32F072-o .\objects\sys_lib.o --omf_browse .\objects\sys_lib.crf --depend .\objects\sys_lib.d)
+I (..\USER\sys_lib.h)(0x632AE7BE)
+I (..\USER\stm32f0xx.h)(0x631EBCD2)
 I (..\Libraries\CMSIS\Include\core_cm0.h)(0x52D7F961)
 I (C:\Keil_v517\ARM\ARMCC\include\stdint.h)(0x55DB3990)
 I (..\Libraries\CMSIS\Include\core_cmInstr.h)(0x52D7F961)
@@ -214,11 +214,11 @@ I (..\USER\uart.h)(0x6301B297)
 I (..\USER\ct_lib.h)(0x6300EAF9)
 I (..\USER\motor_lib.h)(0x6301BE71)
 I (..\USER\spi_lib.h)(0x63024E91)
-I (..\USER\adc_lib.h)(0x63170BFC)
+I (..\USER\adc_lib.h)(0x632AE778)
 I (C:\Keil_v517\ARM\ARMCC\include\stdio.h)(0x55DB3986)
 F (..\USER\spi_lib.c)(0x6315BD8A)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\Device\Include -I..\Libraries\CMSIS\Include -I..\Libraries\STM32F0xx_StdPeriph_Driver\inc -I..\MDK -I..\USER -I..\Libraries\STM32F0xx_StdPeriph_Driver\src -I..\Libraries\Utilities\STM32F072B-Discovery-I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include-D__UVISION_VERSION="517" -DSTM32F030x6 -DUSE_STDPERIPH_DRIVER -DSTM32F072-o .\objects\spi_lib.o --omf_browse .\objects\spi_lib.crf --depend .\objects\spi_lib.d)
 I (..\USER\spi_lib.h)(0x63024E91)
-I (..\USER\stm32f0xx.h)(0x630A1D01)
+I (..\USER\stm32f0xx.h)(0x631EBCD2)
 I (..\Libraries\CMSIS\Include\core_cm0.h)(0x52D7F961)
 I (C:\Keil_v517\ARM\ARMCC\include\stdint.h)(0x55DB3990)
 I (..\Libraries\CMSIS\Include\core_cmInstr.h)(0x52D7F961)
@@ -251,8 +251,8 @@ I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_wwdg.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_misc.h)(0x52D7F99A)
 I (..\USER\pin_define.h)(0x6306B5BE)
 I (..\USER\Delay.h)(0x62FE4ED1)
-F (..\USER\adc_lib.c)(0x6318474F)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\Device\Include -I..\Libraries\CMSIS\Include -I..\Libraries\STM32F0xx_StdPeriph_Driver\inc -I..\MDK -I..\USER -I..\Libraries\STM32F0xx_StdPeriph_Driver\src -I..\Libraries\Utilities\STM32F072B-Discovery-I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include-D__UVISION_VERSION="517" -DSTM32F030x6 -DUSE_STDPERIPH_DRIVER -DSTM32F072-o .\objects\adc_lib.o --omf_browse .\objects\adc_lib.crf --depend .\objects\adc_lib.d)
-I (..\USER\adc_lib.h)(0x63170BFC)
+F (..\USER\adc_lib.c)(0x632A8CC5)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\Device\Include -I..\Libraries\CMSIS\Include -I..\Libraries\STM32F0xx_StdPeriph_Driver\inc -I..\MDK -I..\USER -I..\Libraries\STM32F0xx_StdPeriph_Driver\src -I..\Libraries\Utilities\STM32F072B-Discovery-I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include-D__UVISION_VERSION="517" -DSTM32F030x6 -DUSE_STDPERIPH_DRIVER -DSTM32F072-o .\objects\adc_lib.o --omf_browse .\objects\adc_lib.crf --depend .\objects\adc_lib.d)
+I (..\USER\adc_lib.h)(0x632AE778)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_usart.h)(0x52D7F99A)
 I (..\Libraries\CMSIS\Device\Include\stm32f0xx.h)(0x630A1BA7)
 I (..\Libraries\CMSIS\Include\core_cm0.h)(0x52D7F961)
@@ -283,7 +283,7 @@ I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_syscfg.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_tim.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_wwdg.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_misc.h)(0x52D7F99A)
-I (..\USER\stm32f0xx.h)(0x630A1D01)
+I (..\USER\stm32f0xx.h)(0x631EBCD2)
 I (..\USER\Delay.h)(0x62FE4ED1)
 I (..\USER\pin_define.h)(0x6306B5BE)
 F (..\Libraries\STM32F0xx_StdPeriph_Driver\src\stm32f0xx_adc.c)(0x52D7F999)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\Device\Include -I..\Libraries\CMSIS\Include -I..\Libraries\STM32F0xx_StdPeriph_Driver\inc -I..\MDK -I..\USER -I..\Libraries\STM32F0xx_StdPeriph_Driver\src -I..\Libraries\Utilities\STM32F072B-Discovery-I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include-D__UVISION_VERSION="517" -DSTM32F030x6 -DUSE_STDPERIPH_DRIVER -DSTM32F072-o .\objects\stm32f0xx_adc.o --omf_browse .\objects\stm32f0xx_adc.crf --depend .\objects\stm32f0xx_adc.d)
@@ -1004,10 +1004,11 @@ F (..\USER\uart.h)(0x6301B297)()
 F (..\USER\ct_lib.h)(0x6300EAF9)()
 F (..\USER\pin_define.h)(0x6306B5BE)()
 F (..\USER\motor_lib.h)(0x6301BE71)()
-F (..\USER\sys_lib.h)(0x631822FC)()
+F (..\USER\sys_lib.h)(0x632AE7BE)()
 F (..\USER\spi_lib.h)(0x63024E91)()
+F (..\USER\adc_lib.h)(0x632AE778)()
 F (..\USER\system_stm32f0xx.c)(0x6316DE12)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\Device\Include -I..\Libraries\CMSIS\Include -I..\Libraries\STM32F0xx_StdPeriph_Driver\inc -I..\MDK -I..\USER -I..\Libraries\STM32F0xx_StdPeriph_Driver\src -I..\Libraries\Utilities\STM32F072B-Discovery-I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include-D__UVISION_VERSION="517" -DSTM32F030x6 -DUSE_STDPERIPH_DRIVER -DSTM32F072-o .\objects\system_stm32f0xx.o --omf_browse .\objects\system_stm32f0xx.crf --depend .\objects\system_stm32f0xx.d)
-I (..\USER\stm32f0xx.h)(0x630A1D01)
+I (..\USER\stm32f0xx.h)(0x631EBCD2)
 I (..\Libraries\CMSIS\Include\core_cm0.h)(0x52D7F961)
 I (C:\Keil_v517\ARM\ARMCC\include\stdint.h)(0x55DB3990)
 I (..\Libraries\CMSIS\Include\core_cmInstr.h)(0x52D7F961)
@@ -1038,6 +1039,6 @@ I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_tim.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_usart.h)(0x52D7F99A)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_wwdg.h)(0x52D7F99B)
 I (..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_misc.h)(0x52D7F99A)
-F (..\USER\stm32f0xx.h)(0x630A1D01)()
+F (..\USER\stm32f0xx.h)(0x631EBCD2)()
 F (..\USER\system_stm32f0xx.h)(0x63011168)()
 F (..\USER\startup_stm32f030.s)(0x59908F82)(--cpu Cortex-M0 -g --apcs=interwork -I C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\MDK\RTE-I C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-I C:\Keil_v517\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 517" --pd "STM32F030x6 SETA 1"--list .\listings\startup_stm32f030.lst --xref -o .\objects\startup_stm32f030.o --depend .\objects\startup_stm32f030.d)

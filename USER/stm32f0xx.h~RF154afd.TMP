@@ -86,17 +86,17 @@
 
 /* Old STM32F0XX definition, maintained for legacy purpose */
 #if defined(STM32F0XX) || defined(STM32F0XX_MD) 
-  #define STM32F030
+  #define STM32F051
 #endif /* STM32F0XX */
 
 /* Old STM32F0XX_LD definition, maintained for legacy purpose */
 #ifdef STM32F0XX_LD
-  #define     STM32F030
+  #define     STM32F031
 #endif /* STM32F0XX_LD */
 
 /* Old STM32F0XX_HD definition, maintained for legacy purpose */
 #ifdef STM32F0XX_HD
-   #define   STM32F030
+   #define   STM32F072
 #endif /* STM32F0XX_HD */
 
 /* Old STM32F030X6/X8 definition, maintained for legacy purpose */

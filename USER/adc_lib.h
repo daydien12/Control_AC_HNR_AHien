@@ -11,7 +11,7 @@ extern "C"{
 
 typedef struct
 {
-	uint8_t 	adc_count;
+	uint16_t 	adc_count;
 	uint8_t 	adc_flag;
 	uint8_t 	adc_config;
 	uint8_t		adc_flag_ReadALL;
@@ -45,7 +45,8 @@ typedef struct
 }_adc_kalman_filter_t_;
 extern _adc_kalman_filter_t_ Kalman_OUT_ADC_1, Kalman_OUT_ADC_2, Kalman_OUT_ADC_3, Kalman_LM35, Kalman_ADC_M1, Kalman_ADC_M2;
 
-#define NUMBER_READ_ADC 10
+
+#define NUMBER_READ_ADC 500 //
 
 
 void ADC_Init_All(void);

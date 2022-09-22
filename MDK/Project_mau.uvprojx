@@ -617,6 +617,11 @@
               <FileType>5</FileType>
               <FilePath>..\USER\spi_lib.h</FilePath>
             </File>
+            <File>
+              <FileName>adc_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\adc_lib.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
