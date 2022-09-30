@@ -45,7 +45,7 @@ void ADC_Init_All(void)
 }
 
 static void read_adc_all(uint16_t *_data_, const _adc_channel_e _adc_channel_, _adc_kalman_filter_t_  *_kamal_var)
-{ 
+{
 	if(count_empty_time>=20)
 	{
 		if (Adc_VarArr.adc_config == 0)
@@ -63,8 +63,8 @@ static void read_adc_all(uint16_t *_data_, const _adc_channel_e _adc_channel_, _
 			{
 				count_empty_time = 0;
 				Adc_VarArr.adc_config = 0;
-				//*_data_ = ADC_Kalman_Filter(Adc_VarArr.adc_value, _kamal_var);
-				*_data_ = Adc_VarArr.adc_value;
+				*_data_ = ADC_Kalman_Filter(Adc_VarArr.adc_value, _kamal_var);
+				//*_data_ = Adc_VarArr.adc_value;
 				channel_read_all = _adc_channel_;
 			}
 		}
@@ -93,9 +93,6 @@ uint16_t ADC_Read_One_Channel(const _adc_channel_e ADC_Channel, const uint32_t A
 void ADC_Read_All(uint16_t *_adc_arr_data_)
 {
   ADC1->SMPR = ADC_SampleTime_239_5Cycles;
-	//read_adc_all(&_adc_arr_data_[1], ADC_Channel_1_OUT_ADC_2, &Kalman_OUT_ADC_2);
-	//Adc_VarArr.adc_flag_ReadALL = 1;
-	//*
 	switch (channel_read_all)
 	{
 		case ADC_Channel_0_OUT_ADC_1:
@@ -124,7 +121,6 @@ void ADC_Read_All(uint16_t *_adc_arr_data_)
 			Adc_VarArr.adc_flag_ReadALL = 1;
 			break;
 	}
-	//*/
 }
 
 uint16_t ADC_Kalman_Filter(unsigned long ADC_Value, _adc_kalman_filter_t_ *_adc_kalman_)
@@ -137,8 +133,8 @@ uint16_t ADC_Kalman_Filter(unsigned long ADC_Value, _adc_kalman_filter_t_ *_adc_
 			_adc_kalman_->ADC_OLD_Value = 0.0;
 			_adc_kalman_->P_k1_k1 = 0.0;
 			_adc_kalman_->kalman_adc_old=0;
-			_adc_kalman_->Q = 0.00008; //Q: Regulation noise, Q increases, dynamic response becomes faster, and convergence stability becomes worse
-			_adc_kalman_->R = 0.005;    //R: Test noise, R increases, dynamic response becomes slower, convergence stability becomes better
+			_adc_kalman_->Q = 0.00001; //Q: Regulation noise, Q increases, dynamic response becomes faster, and convergence stability becomes worse
+			_adc_kalman_->R = 0.0005;    //R: Test noise, R increases, dynamic response becomes slower, convergence stability becomes better
 			_adc_kalman_->Kg = 0;
 			_adc_kalman_->P_k_k1 = 1;
 			_adc_kalman_->init_data = 1;
@@ -166,8 +162,6 @@ void ADC1_IRQHandler()
 	uint16_t tempadc = 0;
   if (ADC_GetITStatus(ADC1, ADC_IT_EOC))
   {
-		//GPIO_WriteBit(GPIOA, SPISCK, aa);
-		//aa =! aa;
     ADC_ClearITPendingBit(ADC1, ADC_IT_EOC);
     if (Adc_VarArr.adc_count >= NUMBER_READ_ADC)
     {

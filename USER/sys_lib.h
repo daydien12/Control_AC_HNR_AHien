@@ -63,17 +63,6 @@ typedef struct
 	uint8_t  flag_stanby;
 }_sys_value_t;
 
-typedef struct 
-{
-	uint8_t status_sig;
-	uint16_t volt_in;
-	uint16_t amp_in;
-	uint16_t volt_out1;
-	uint16_t volt_out2;
-	uint8_t value_temp;
-	uint8_t value_freq;
-	uint8_t	byte_zero;
-}spi_struct_type_t;
 
 
 void SYS_Init_ALL(void);

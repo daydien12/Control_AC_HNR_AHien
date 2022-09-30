@@ -11,7 +11,7 @@ void SPI_Command_Init(void)
     SPI_InitStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;
     SPI_InitStruct.SPI_CPHA = SPI_CPHA_1Edge;
     SPI_InitStruct.SPI_CPOL = SPI_CPOL_Low;
-    SPI_InitStruct.SPI_DataSize = SPI_DataSize_8b;
+    SPI_InitStruct.SPI_DataSize = SPI_DataSize_16b;
     SPI_InitStruct.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
     SPI_InitStruct.SPI_FirstBit = SPI_FirstBit_MSB;
     SPI_InitStruct.SPI_Mode = SPI_Mode_Master;
@@ -52,6 +52,19 @@ uint16_t SPIx_Transfer(uint16_t data)
 	SPI1->DR=data;										// вывод в SPI1
 	while (!(SPI1->SR & SPI_SR_RXNE));     				// ждем окончания обмена (STM32F103)
 	return SPI1->DR;		         					// читаем принятые данные
+}
+
+void Transfer_Data(spi_struct_type_t *data)
+{
+	uint16_t *tempdata = (uint16_t*)data;
+	uint8_t i = 0;
+	SPIx_EnableSlave();
+	for(i=0; i<8; i++)
+	{
+		SPIx_Transfer(tempdata[i]);
+	}
+	
+	SPIx_DisableSlave();
 }
 
 

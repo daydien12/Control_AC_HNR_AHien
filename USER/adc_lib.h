@@ -9,6 +9,8 @@ extern "C"{
 #include "Delay.h"
 #include "pin_define.h"
 
+
+	
 typedef struct
 {
 	uint16_t 	adc_count;
@@ -46,9 +48,10 @@ typedef struct
 extern _adc_kalman_filter_t_ Kalman_OUT_ADC_1, Kalman_OUT_ADC_2, Kalman_OUT_ADC_3, Kalman_LM35, Kalman_ADC_M1, Kalman_ADC_M2;
 
 
-#define NUMBER_READ_ADC 500 //
+#define NUMBER_READ_ADC 500 
 
-
+//float Table_Correction[2][2];//= {{0.198, -7.0297}, {0.198, -7.0297}};
+ 
 void ADC_Init_All(void);
 void ADC_Read_All(uint16_t *_adc_arr_data_);	
 uint16_t ADC_Read_One_Channel(const _adc_channel_e ADC_Channel, const uint32_t ADC_Sample);
