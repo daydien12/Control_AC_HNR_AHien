@@ -28,8 +28,8 @@ static void sys_control_motor(void);
 static void sys_spi_transmission(void);
 
 static float Table_Correction_volt_in[2][2] = {
-{0.2, -9.00}, 
-{0.198, -7.0297}
+{0.198, -7.0297}, 
+{0.2, -9.00}
 };
 void SYS_Init_ALL(void)
 {
@@ -44,10 +44,10 @@ void SYS_Init_ALL(void)
 	GPIO_Init(SPI_CM_PORT, &GPIO_InitStructure);
 	
 	
-  //UART_Init();
+  UART_Init();
   ADC_Init_All();
   CT_Init();
-  //CT_Motor_Init();
+  CT_Motor_Init();
   SYS_TIM3_Init();
   SPI_Command_Init();
 	sys_status_init();
@@ -59,22 +59,7 @@ void SYS_Run(void)
 {
 	char arr[100];
 	spi_struct_type_t datatest;
-	if(Time_tick.flag_time_1s)
-	{
-		Time_tick.flag_time_1s = 0;
-		sys_assign_adc();
-		Adc_VarArr.adc_flag_ReadALL = 0;
-		//sprintf(arr, "adc0:%d adc1:%d adc2:%d adc3:%d adc8:%d adc9:%d\n",  sys_var.volt_in, sys_var.volt_out1, sys_var.amp_in, sys_var.value_temp, sys_var.volt_13m1, sys_var.volt_13m2);
-		//sprintf(arr, "Variable 1: %d\n", sizeof(spi_struct_type_t));
-		//sprintf(arr, "Variable 1: %d - %f\n", sys_var.amp_in, (((float)sys_var.amp_in*0.00738)+ (-3.7343)));
-		//sprintf(arr, "Variable 1: %d \n", sys_var.volt_in);
-		//sprintf(arr, "spi_struct_type_t:%d \n", sizeof(spi_struct_type_t));
-		//Send_String(arr);
-		//((sys_var.volt_in*0.8)+138.407)
-		//Time_tick.flag_time_1s = 0;
-		//sprintf(arr, "adc0:%d \n", VOUT_AVG);
-		//Send_String(arr);
-	}
+
 	
   if (BT1.Flag == 1)
   {
@@ -98,19 +83,11 @@ void SYS_Run(void)
 		}
   }
 	//CT_Motor_1(300, MOTOR_LEFT);
+//*
 
-	datatest.status_sig 	= 0x11; 	//1 byte
-	datatest. value_temp 	= 0x22;   //1 byte
-	datatest. value_freq 	= 0x33;		//1 byte
-	datatest.	byte_zero 	= 0x44;		//1 byte
-	datatest. volt_in 		= 0xAABB;	//2 byte
-	datatest. volt_out1 	= 0xCCDD;	//2 byte
-	datatest. volt_out2 	= 0xEEFF;	//2 byte
-	datatest. amp_in 			= 1.1234;	//4 byte
-	Transfer_Data(&datatest);
-	delay_ms(1000);
-	
-	/*
+	//datatest.	byte_zero 	= 0x0;	//1 byte
+
+	//*
 	if((VIN_MIN < sys_var.volt_in)&&(sys_var.volt_in < VIN_MAX))
 	{
 		
@@ -159,12 +136,37 @@ void SYS_Run(void)
 	{
 		sys_status_error();
 	}
-	*/
+	//*/
+	
+	if(Time_tick.flag_time_1s)
+	{
+		Time_tick.flag_time_1s = 0;
+		sys_assign_adc();
+		Adc_VarArr.adc_flag_ReadALL = 0;
+		sprintf(arr, "adc0:%d adc1:%d adc2:%f adc3:%d adc8:%d adc9:%d\n",  sys_var.volt_in, sys_var.volt_out1, sys_var.amp_in, sys_var.value_temp, sys_var.volt_13m1, sys_var.volt_13m2);
+		//sprintf(arr, "Variable 1: %d\n", sizeof(spi_struct_type_t));
+		//sprintf(arr, "Variable 1: %d - %f\n", sys_var.amp_in, (((float)sys_var.amp_in*0.00738)+ (-3.7343)));
+		//sprintf(arr, "Variable 1: %d \n", sys_var.volt_in);
+		//sprintf(arr, "spi_struct_type_t:%d \n", sizeof(spi_struct_type_t));
+		//Send_String(arr);
+		//((sys_var.volt_in*0.8)+138.407)
+		//Time_tick.flag_time_1s = 0;
+		//sprintf(arr, "adc0:%d \n", VOUT_AVG);
+		Send_String(arr);
+
+		datatest.status_sig 	= sys_var.Status_sig; 	//1 byte
+		datatest. volt_in 		= sys_var.volt_in;	//2 byte
+		datatest. amp_in 			=  (uint16_t)(sys_var.amp_in*100);	//4 byte
+		datatest. volt_out1 	= sys_var.volt_out1;	//2 byte
+		datatest. volt_out2 	= sys_var.volt_out2;	//2 byte
+		datatest. value_temp 	= 10;  //1 byte
+		datatest. value_freq 	= 50;	//1 byte
+		Transfer_Data(&datatest);
+	}
 }
 
 static void sys_assign_adc(void)
 {
-	//char arr[100];
 	if (Adc_VarArr.adc_flag_ReadALL == 1)
 	{
 		Adc_VarArr.adc_flag_ReadALL = 0;
@@ -200,7 +202,7 @@ static void sys_assign_adc(void)
 				sys_var.volt_out1 = 300;
 		}
 		//sys_var.volt_out1 		= Adc_Arr_Convert[1];
-		sys_var.amp_in 				= Adc_Arr_Convert[2];
+		sys_var.amp_in 				= (((float)Adc_Arr_Convert[2]*0.00738)+ (-3.7343));;
 		sys_var.value_temp 		= Adc_Arr_Convert[3];
 		sys_var.volt_13m1 		= Adc_Arr_Convert[4];
 		sys_var.volt_13m2 		= Adc_Arr_Convert[5];

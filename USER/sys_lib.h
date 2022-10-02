@@ -53,7 +53,7 @@ typedef struct
 {
 	_sys_status_e Status_sig;
 	uint16_t volt_in;
-	uint16_t amp_in;
+	float amp_in;
 	uint16_t volt_out1;
 	uint16_t volt_out2;
 	uint16_t value_temp;

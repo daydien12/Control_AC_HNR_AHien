@@ -59,7 +59,7 @@ void Transfer_Data(spi_struct_type_t *data)
 	uint16_t *tempdata = (uint16_t*)data;
 	uint8_t i = 0;
 	SPIx_EnableSlave();
-	for(i=0; i<8; i++)
+	for(i=0; i<6; i++)
 	{
 		SPIx_Transfer(tempdata[i]);
 	}

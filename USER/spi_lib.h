@@ -12,13 +12,13 @@ extern "C"{
 typedef struct 
 {
 	uint8_t status_sig; 	//1 byte
-	uint8_t value_temp;   //1 byte
-	uint8_t value_freq;		//1 byte
-	uint8_t	byte_zero;		//1 byte
 	uint16_t volt_in;			//2 byte
+	uint16_t amp_in;      //2 byte
 	uint16_t volt_out1;		//2 byte
 	uint16_t volt_out2;		//2 byte
-	float amp_in;					//4 byte
+	uint8_t value_temp;   //1 byte
+	uint8_t value_freq;		//1 byte
+	//uint8_t	byte_zero;		//1 byte
 }spi_struct_type_t;
 
 	

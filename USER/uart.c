@@ -22,7 +22,7 @@ void UART_Init(void)
 
   GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_1);
   GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_1);
-
+/*
   GPIO_InitStruct.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_10;
   GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
   GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
@@ -34,7 +34,7 @@ void UART_Init(void)
 
   USART_InitStruct.USART_BaudRate = 9600;
   USART_InitStruct.USART_HardwareFlowControl =
-   USART_HardwareFlowControl_None;
+  USART_HardwareFlowControl_None;
   USART_InitStruct.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
   USART_InitStruct.USART_Parity = USART_Parity_No;
   USART_InitStruct.USART_StopBits = USART_StopBits_1;
@@ -45,6 +45,7 @@ void UART_Init(void)
   USART_Cmd(USART1, ENABLE);
   USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
   NVIC_EnableIRQ(USART1_IRQn);
+	*/
 }
 
 
