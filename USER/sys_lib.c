@@ -82,7 +82,7 @@ void SYS_Run(void)
 			VOUT_AVG--;
 		}
   }
-	//CT_Motor_1(300, MOTOR_LEFT);
+	//CT_Motor_1(600, MOTOR_LEFT);
 //*
 
 	//datatest.	byte_zero 	= 0x0;	//1 byte
@@ -252,21 +252,28 @@ static void sys_status_init(void)
 	CT_Relay(RELAY_ON);
 	CT_BeeP(BEEP_OFF, 0);
 	delay_ms(1500);
+	sys_var.flag_normal_loading = 0;
 }
+
 static void sys_status_stanby(void)
 {
 	sys_var.Status_sig = STT_STANBY;
 	CT_Relay(RELAY_ON);
 	CT_BeeP(BEEP_OFF, 0);
 	sys_var.volt_out2 = 7;
+	sys_var.flag_normal_loading = 0;
 }
 static void sys_status_normal_loading(void)
 {
 		sys_var.Status_sig = STT_NORMAL_LOADING;
 		CT_Relay(RELAY_OFF);
-		CT_BeeP(BEEP_ON, 0);
-		delay_ms(500);
-		CT_BeeP(BEEP_OFF, 0);
+		if(sys_var.flag_normal_loading == 0)
+		{
+			CT_BeeP(BEEP_ON, 0);
+			delay_ms(500);
+			CT_BeeP(BEEP_OFF, 0);
+			sys_var.flag_normal_loading = 1;
+		}
 		sys_var.volt_out2 = sys_var.volt_out1;
 }
 
@@ -276,6 +283,7 @@ static void sys_status_normal_overvoltage(void)
 		CT_Relay(RELAY_OFF);
 		CT_BeeP(BEEP_BEEP, TIME_BEEP);
 		sys_var.volt_out2 = sys_var.volt_out1;
+		sys_var.flag_normal_loading = 0;
 }
 
 static void sys_status_normal_undervoltage(void)
@@ -284,6 +292,7 @@ static void sys_status_normal_undervoltage(void)
 		CT_Relay(RELAY_OFF);
 		CT_BeeP(BEEP_BEEP, TIME_BEEP);
 		sys_var.volt_out2 = sys_var.volt_out1;
+		sys_var.flag_normal_loading = 0;
 }
 
 static void sys_status_normal_overload(void)
@@ -292,6 +301,7 @@ static void sys_status_normal_overload(void)
 		CT_Relay(RELAY_OFF);
 		CT_BeeP(BEEP_BEEP, TIME_BEEP);
 		sys_var.volt_out2 = sys_var.volt_out1;
+		sys_var.flag_normal_loading = 0;
 }
 
 static void sys_status_abnormal_overvoltage(void)
@@ -300,6 +310,7 @@ static void sys_status_abnormal_overvoltage(void)
 		CT_Relay(RELAY_ON);
 		CT_BeeP(BEEP_BEEP, TIME_BEEP);
 		sys_var.volt_out2 = 0;
+		sys_var.flag_normal_loading = 0;
 }
 
 static void sys_status_abnormal_undervoltage(void)
@@ -308,6 +319,7 @@ static void sys_status_abnormal_undervoltage(void)
 		CT_Relay(RELAY_ON);
 		CT_BeeP(BEEP_BEEP, TIME_BEEP);
 		sys_var.volt_out2 = 0;
+		sys_var.flag_normal_loading = 0;
 }
 
 static void sys_status_abnormal_overload(void)
@@ -316,11 +328,12 @@ static void sys_status_abnormal_overload(void)
 		CT_Relay(RELAY_ON);
 		CT_BeeP(BEEP_BEEP, TIME_BEEP);
 		sys_var.volt_out2 = 0;
+		sys_var.flag_normal_loading = 0;
 }
 
 static void sys_status_reset(void)
 {
-	
+		sys_var.flag_normal_loading = 0;
 }
 
 static void sys_status_error(void)
@@ -328,6 +341,7 @@ static void sys_status_error(void)
 	sys_var.Status_sig = STT_ERROR;
 	CT_Relay(RELAY_ON);
 	CT_BeeP(BEEP_ON, 0);
+	sys_var.flag_normal_loading = 0;
 }
 
 static void sys_control_motor(void)

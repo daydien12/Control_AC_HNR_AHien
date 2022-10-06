@@ -61,6 +61,7 @@ typedef struct
 	uint16_t volt_13m1;
 	uint16_t volt_13m2;
 	uint8_t  flag_stanby;
+	uint8_t flag_normal_loading;
 }_sys_value_t;
 
 

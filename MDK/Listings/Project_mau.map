@@ -151,6 +151,7 @@ Section Cross References
     sys_lib.o(i.sys_status_normal_undervoltage) refers to ct_lib.o(i.CT_Relay) for CT_Relay
     sys_lib.o(i.sys_status_normal_undervoltage) refers to ct_lib.o(i.CT_BeeP) for CT_BeeP
     sys_lib.o(i.sys_status_normal_undervoltage) refers to sys_lib.o(.bss) for sys_var
+    sys_lib.o(i.sys_status_reset) refers to sys_lib.o(.bss) for sys_var
     sys_lib.o(i.sys_status_stanby) refers to ct_lib.o(i.CT_Relay) for CT_Relay
     sys_lib.o(i.sys_status_stanby) refers to ct_lib.o(i.CT_BeeP) for CT_BeeP
     sys_lib.o(i.sys_status_stanby) refers to sys_lib.o(.bss) for sys_var
@@ -508,7 +509,7 @@ Removing Unused input sections from the image.
     Removing sys_lib.o(.revsh_text), (4 bytes).
     Removing sys_lib.o(i.sys_control_motor), (108 bytes).
     Removing sys_lib.o(i.sys_spi_transmission), (2 bytes).
-    Removing sys_lib.o(i.sys_status_reset), (2 bytes).
+    Removing sys_lib.o(i.sys_status_reset), (12 bytes).
     Removing spi_lib.o(.rev16_text), (4 bytes).
     Removing spi_lib.o(.revsh_text), (4 bytes).
     Removing adc_lib.o(.rev16_text), (4 bytes).
@@ -1069,7 +1070,7 @@ Removing Unused input sections from the image.
     Removing system_stm32f0xx.o(.rev16_text), (4 bytes).
     Removing system_stm32f0xx.o(.revsh_text), (4 bytes).
 
-581 unused section(s) (total 21242 bytes) removed from the image.
+581 unused section(s) (total 21252 bytes) removed from the image.
 
 ==============================================================================
 
@@ -1425,47 +1426,47 @@ Image Symbol Table
     i.sys_assign_adc                         0x08002e78   Section        0  sys_lib.o(i.sys_assign_adc)
     sys_assign_adc                           0x08002e79   Thumb Code   234  sys_lib.o(i.sys_assign_adc)
     i.sys_status_abnormal_overload           0x08002f84   Section        0  sys_lib.o(i.sys_status_abnormal_overload)
-    sys_status_abnormal_overload             0x08002f85   Thumb Code    32  sys_lib.o(i.sys_status_abnormal_overload)
-    i.sys_status_abnormal_overvoltage        0x08002fa8   Section        0  sys_lib.o(i.sys_status_abnormal_overvoltage)
-    sys_status_abnormal_overvoltage          0x08002fa9   Thumb Code    32  sys_lib.o(i.sys_status_abnormal_overvoltage)
-    i.sys_status_abnormal_undervoltage       0x08002fcc   Section        0  sys_lib.o(i.sys_status_abnormal_undervoltage)
-    sys_status_abnormal_undervoltage         0x08002fcd   Thumb Code    32  sys_lib.o(i.sys_status_abnormal_undervoltage)
-    i.sys_status_error                       0x08002ff0   Section        0  sys_lib.o(i.sys_status_error)
-    sys_status_error                         0x08002ff1   Thumb Code    24  sys_lib.o(i.sys_status_error)
-    i.sys_status_init                        0x0800300c   Section        0  sys_lib.o(i.sys_status_init)
-    sys_status_init                          0x0800300d   Thumb Code    28  sys_lib.o(i.sys_status_init)
-    i.sys_status_normal_loading              0x08003030   Section        0  sys_lib.o(i.sys_status_normal_loading)
-    sys_status_normal_loading                0x08003031   Thumb Code    48  sys_lib.o(i.sys_status_normal_loading)
-    i.sys_status_normal_overload             0x08003064   Section        0  sys_lib.o(i.sys_status_normal_overload)
-    sys_status_normal_overload               0x08003065   Thumb Code    34  sys_lib.o(i.sys_status_normal_overload)
-    i.sys_status_normal_overvoltage          0x0800308c   Section        0  sys_lib.o(i.sys_status_normal_overvoltage)
-    sys_status_normal_overvoltage            0x0800308d   Thumb Code    34  sys_lib.o(i.sys_status_normal_overvoltage)
-    i.sys_status_normal_undervoltage         0x080030b4   Section        0  sys_lib.o(i.sys_status_normal_undervoltage)
-    sys_status_normal_undervoltage           0x080030b5   Thumb Code    34  sys_lib.o(i.sys_status_normal_undervoltage)
-    i.sys_status_stanby                      0x080030dc   Section        0  sys_lib.o(i.sys_status_stanby)
-    sys_status_stanby                        0x080030dd   Thumb Code    30  sys_lib.o(i.sys_status_stanby)
-    locale$$code                             0x08003100   Section       44  lc_numeric_c.o(locale$$code)
-    x$fpl$fadd                               0x0800312c   Section      140  faddsub.o(x$fpl$fadd)
-    _fadd1                                   0x08003139   Thumb Code     0  faddsub.o(x$fpl$fadd)
-    x$fpl$fleqf                              0x080031b8   Section       84  flef.o(x$fpl$fleqf)
-    x$fpl$fmul                               0x0800320c   Section      176  fmul.o(x$fpl$fmul)
-    x$fpl$frleqf                             0x080032bc   Section       88  frlef.o(x$fpl$frleqf)
-    x$fpl$fsub                               0x08003314   Section      208  faddsub.o(x$fpl$fsub)
-    _fsub1                                   0x08003321   Thumb Code     0  faddsub.o(x$fpl$fsub)
-    x$fpl$printf1                            0x080033e4   Section       16  printf1.o(x$fpl$printf1)
-    .constdata                               0x080033f4   Section       64  fdiv.o(.constdata)
-    x$fpl$usenofp                            0x080033f4   Section        0  usenofp.o(x$fpl$usenofp)
-    fdiv_tab                                 0x080033f4   Data          64  fdiv.o(.constdata)
-    .constdata                               0x08003434   Section      148  bigflt0.o(.constdata)
-    tenpwrs_x                                0x08003434   Data          60  bigflt0.o(.constdata)
-    tenpwrs_i                                0x08003470   Data          64  bigflt0.o(.constdata)
-    locale$$data                             0x080034e8   Section       28  lc_numeric_c.o(locale$$data)
-    __lcnum_c_name                           0x080034ec   Data           2  lc_numeric_c.o(locale$$data)
-    __lcnum_c_start                          0x080034f4   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_point                          0x08003500   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_thousands                      0x08003502   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_grouping                       0x08003503   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_end                            0x08003504   Data           0  lc_numeric_c.o(locale$$data)
+    sys_status_abnormal_overload             0x08002f85   Thumb Code    34  sys_lib.o(i.sys_status_abnormal_overload)
+    i.sys_status_abnormal_overvoltage        0x08002fac   Section        0  sys_lib.o(i.sys_status_abnormal_overvoltage)
+    sys_status_abnormal_overvoltage          0x08002fad   Thumb Code    34  sys_lib.o(i.sys_status_abnormal_overvoltage)
+    i.sys_status_abnormal_undervoltage       0x08002fd4   Section        0  sys_lib.o(i.sys_status_abnormal_undervoltage)
+    sys_status_abnormal_undervoltage         0x08002fd5   Thumb Code    34  sys_lib.o(i.sys_status_abnormal_undervoltage)
+    i.sys_status_error                       0x08002ffc   Section        0  sys_lib.o(i.sys_status_error)
+    sys_status_error                         0x08002ffd   Thumb Code    30  sys_lib.o(i.sys_status_error)
+    i.sys_status_init                        0x08003020   Section        0  sys_lib.o(i.sys_status_init)
+    sys_status_init                          0x08003021   Thumb Code    34  sys_lib.o(i.sys_status_init)
+    i.sys_status_normal_loading              0x0800304c   Section        0  sys_lib.o(i.sys_status_normal_loading)
+    sys_status_normal_loading                0x0800304d   Thumb Code    62  sys_lib.o(i.sys_status_normal_loading)
+    i.sys_status_normal_overload             0x08003090   Section        0  sys_lib.o(i.sys_status_normal_overload)
+    sys_status_normal_overload               0x08003091   Thumb Code    38  sys_lib.o(i.sys_status_normal_overload)
+    i.sys_status_normal_overvoltage          0x080030bc   Section        0  sys_lib.o(i.sys_status_normal_overvoltage)
+    sys_status_normal_overvoltage            0x080030bd   Thumb Code    38  sys_lib.o(i.sys_status_normal_overvoltage)
+    i.sys_status_normal_undervoltage         0x080030e8   Section        0  sys_lib.o(i.sys_status_normal_undervoltage)
+    sys_status_normal_undervoltage           0x080030e9   Thumb Code    38  sys_lib.o(i.sys_status_normal_undervoltage)
+    i.sys_status_stanby                      0x08003114   Section        0  sys_lib.o(i.sys_status_stanby)
+    sys_status_stanby                        0x08003115   Thumb Code    34  sys_lib.o(i.sys_status_stanby)
+    locale$$code                             0x0800313c   Section       44  lc_numeric_c.o(locale$$code)
+    x$fpl$fadd                               0x08003168   Section      140  faddsub.o(x$fpl$fadd)
+    _fadd1                                   0x08003175   Thumb Code     0  faddsub.o(x$fpl$fadd)
+    x$fpl$fleqf                              0x080031f4   Section       84  flef.o(x$fpl$fleqf)
+    x$fpl$fmul                               0x08003248   Section      176  fmul.o(x$fpl$fmul)
+    x$fpl$frleqf                             0x080032f8   Section       88  frlef.o(x$fpl$frleqf)
+    x$fpl$fsub                               0x08003350   Section      208  faddsub.o(x$fpl$fsub)
+    _fsub1                                   0x0800335d   Thumb Code     0  faddsub.o(x$fpl$fsub)
+    x$fpl$printf1                            0x08003420   Section       16  printf1.o(x$fpl$printf1)
+    .constdata                               0x08003430   Section       64  fdiv.o(.constdata)
+    x$fpl$usenofp                            0x08003430   Section        0  usenofp.o(x$fpl$usenofp)
+    fdiv_tab                                 0x08003430   Data          64  fdiv.o(.constdata)
+    .constdata                               0x08003470   Section      148  bigflt0.o(.constdata)
+    tenpwrs_x                                0x08003470   Data          60  bigflt0.o(.constdata)
+    tenpwrs_i                                0x080034ac   Data          64  bigflt0.o(.constdata)
+    locale$$data                             0x08003524   Section       28  lc_numeric_c.o(locale$$data)
+    __lcnum_c_name                           0x08003528   Data           2  lc_numeric_c.o(locale$$data)
+    __lcnum_c_start                          0x08003530   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_point                          0x0800353c   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_thousands                      0x0800353e   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_grouping                       0x0800353f   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_end                            0x08003540   Data           0  lc_numeric_c.o(locale$$data)
     .data                                    0x20000000   Section        2  delay.o(.data)
     .data                                    0x20000004   Section        9  uart.o(.data)
     .data                                    0x2000000e   Section        8  ct_lib.o(.data)
@@ -1736,21 +1737,21 @@ Image Symbol Table
     __ARM_fpclassify                         0x08002d5d   Thumb Code    40  fpclassify.o(i.__ARM_fpclassify)
     delay_ms                                 0x08002db1   Thumb Code    38  delay.o(i.delay_ms)
     main                                     0x08002de1   Thumb Code    20  main.o(i.main)
-    _get_lc_numeric                          0x08003101   Thumb Code    44  lc_numeric_c.o(locale$$code)
-    __aeabi_fadd                             0x0800312d   Thumb Code     0  faddsub.o(x$fpl$fadd)
-    _fadd                                    0x0800312d   Thumb Code   134  faddsub.o(x$fpl$fadd)
-    __aeabi_cfcmple                          0x080031b9   Thumb Code     0  flef.o(x$fpl$fleqf)
-    _fcmple                                  0x080031b9   Thumb Code    78  flef.o(x$fpl$fleqf)
-    __aeabi_fmul                             0x0800320d   Thumb Code     0  fmul.o(x$fpl$fmul)
-    _fmul                                    0x0800320d   Thumb Code   172  fmul.o(x$fpl$fmul)
-    __aeabi_cfrcmple                         0x080032bd   Thumb Code     0  frlef.o(x$fpl$frleqf)
-    _frcmple                                 0x080032bd   Thumb Code    84  frlef.o(x$fpl$frleqf)
-    __aeabi_fsub                             0x08003315   Thumb Code     0  faddsub.o(x$fpl$fsub)
-    _fsub                                    0x08003315   Thumb Code   204  faddsub.o(x$fpl$fsub)
-    _printf_fp_dec                           0x080033e5   Thumb Code    16  printf1.o(x$fpl$printf1)
-    __I$use$fp                               0x080033f4   Number         0  usenofp.o(x$fpl$usenofp)
-    Region$$Table$$Base                      0x080034c8   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080034e8   Number         0  anon$$obj.o(Region$$Table)
+    _get_lc_numeric                          0x0800313d   Thumb Code    44  lc_numeric_c.o(locale$$code)
+    __aeabi_fadd                             0x08003169   Thumb Code     0  faddsub.o(x$fpl$fadd)
+    _fadd                                    0x08003169   Thumb Code   134  faddsub.o(x$fpl$fadd)
+    __aeabi_cfcmple                          0x080031f5   Thumb Code     0  flef.o(x$fpl$fleqf)
+    _fcmple                                  0x080031f5   Thumb Code    78  flef.o(x$fpl$fleqf)
+    __aeabi_fmul                             0x08003249   Thumb Code     0  fmul.o(x$fpl$fmul)
+    _fmul                                    0x08003249   Thumb Code   172  fmul.o(x$fpl$fmul)
+    __aeabi_cfrcmple                         0x080032f9   Thumb Code     0  frlef.o(x$fpl$frleqf)
+    _frcmple                                 0x080032f9   Thumb Code    84  frlef.o(x$fpl$frleqf)
+    __aeabi_fsub                             0x08003351   Thumb Code     0  faddsub.o(x$fpl$fsub)
+    _fsub                                    0x08003351   Thumb Code   204  faddsub.o(x$fpl$fsub)
+    _printf_fp_dec                           0x08003421   Thumb Code    16  printf1.o(x$fpl$printf1)
+    __I$use$fp                               0x08003430   Number         0  usenofp.o(x$fpl$usenofp)
+    Region$$Table$$Base                      0x08003504   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08003524   Number         0  anon$$obj.o(Region$$Table)
     delay                                    0x20000000   Data           2  delay.o(.data)
     RX_FLAG_END_LINE                         0x20000004   Data           1  uart.o(.data)
     RXI                                      0x20000008   Data           4  uart.o(.data)
@@ -1782,9 +1783,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000181
 
-  Load Region LR_1 (Base: 0x08000000, Size: 0x00003578, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x08000000, Size: 0x000035b4, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Base: 0x08000000, Size: 0x00003504, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Base: 0x08000000, Size: 0x00003540, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -1965,28 +1966,28 @@ Memory Map of the image
     0x08002de0   0x00000014   Code   RO            3    i.main              main.o
     0x08002df4   0x00000084   Code   RO          535    i.read_adc_all      adc_lib.o
     0x08002e78   0x0000010c   Code   RO          372    i.sys_assign_adc    sys_lib.o
-    0x08002f84   0x00000024   Code   RO          375    i.sys_status_abnormal_overload  sys_lib.o
-    0x08002fa8   0x00000024   Code   RO          376    i.sys_status_abnormal_overvoltage  sys_lib.o
-    0x08002fcc   0x00000024   Code   RO          377    i.sys_status_abnormal_undervoltage  sys_lib.o
-    0x08002ff0   0x0000001c   Code   RO          378    i.sys_status_error  sys_lib.o
-    0x0800300c   0x00000024   Code   RO          379    i.sys_status_init   sys_lib.o
-    0x08003030   0x00000034   Code   RO          380    i.sys_status_normal_loading  sys_lib.o
-    0x08003064   0x00000028   Code   RO          381    i.sys_status_normal_overload  sys_lib.o
-    0x0800308c   0x00000028   Code   RO          382    i.sys_status_normal_overvoltage  sys_lib.o
-    0x080030b4   0x00000028   Code   RO          383    i.sys_status_normal_undervoltage  sys_lib.o
-    0x080030dc   0x00000024   Code   RO          385    i.sys_status_stanby  sys_lib.o
-    0x08003100   0x0000002c   Code   RO         4327    locale$$code        c_p.l(lc_numeric_c.o)
-    0x0800312c   0x0000008c   Code   RO         4251    x$fpl$fadd          fz_ps.l(faddsub.o)
-    0x080031b8   0x00000054   Code   RO         4264    x$fpl$fleqf         fz_ps.l(flef.o)
-    0x0800320c   0x000000b0   Code   RO         4266    x$fpl$fmul          fz_ps.l(fmul.o)
-    0x080032bc   0x00000058   Code   RO         4268    x$fpl$frleqf        fz_ps.l(frlef.o)
-    0x08003314   0x000000d0   Code   RO         4253    x$fpl$fsub          fz_ps.l(faddsub.o)
-    0x080033e4   0x00000010   Code   RO         4270    x$fpl$printf1       fz_ps.l(printf1.o)
-    0x080033f4   0x00000000   Code   RO         4290    x$fpl$usenofp       fz_ps.l(usenofp.o)
-    0x080033f4   0x00000040   Data   RO         4258    .constdata          fz_ps.l(fdiv.o)
-    0x08003434   0x00000094   Data   RO         4320    .constdata          c_p.l(bigflt0.o)
-    0x080034c8   0x00000020   Data   RO         4484    Region$$Table       anon$$obj.o
-    0x080034e8   0x0000001c   Data   RO         4326    locale$$data        c_p.l(lc_numeric_c.o)
+    0x08002f84   0x00000028   Code   RO          375    i.sys_status_abnormal_overload  sys_lib.o
+    0x08002fac   0x00000028   Code   RO          376    i.sys_status_abnormal_overvoltage  sys_lib.o
+    0x08002fd4   0x00000028   Code   RO          377    i.sys_status_abnormal_undervoltage  sys_lib.o
+    0x08002ffc   0x00000024   Code   RO          378    i.sys_status_error  sys_lib.o
+    0x08003020   0x0000002c   Code   RO          379    i.sys_status_init   sys_lib.o
+    0x0800304c   0x00000044   Code   RO          380    i.sys_status_normal_loading  sys_lib.o
+    0x08003090   0x0000002c   Code   RO          381    i.sys_status_normal_overload  sys_lib.o
+    0x080030bc   0x0000002c   Code   RO          382    i.sys_status_normal_overvoltage  sys_lib.o
+    0x080030e8   0x0000002c   Code   RO          383    i.sys_status_normal_undervoltage  sys_lib.o
+    0x08003114   0x00000028   Code   RO          385    i.sys_status_stanby  sys_lib.o
+    0x0800313c   0x0000002c   Code   RO         4327    locale$$code        c_p.l(lc_numeric_c.o)
+    0x08003168   0x0000008c   Code   RO         4251    x$fpl$fadd          fz_ps.l(faddsub.o)
+    0x080031f4   0x00000054   Code   RO         4264    x$fpl$fleqf         fz_ps.l(flef.o)
+    0x08003248   0x000000b0   Code   RO         4266    x$fpl$fmul          fz_ps.l(fmul.o)
+    0x080032f8   0x00000058   Code   RO         4268    x$fpl$frleqf        fz_ps.l(frlef.o)
+    0x08003350   0x000000d0   Code   RO         4253    x$fpl$fsub          fz_ps.l(faddsub.o)
+    0x08003420   0x00000010   Code   RO         4270    x$fpl$printf1       fz_ps.l(printf1.o)
+    0x08003430   0x00000000   Code   RO         4290    x$fpl$usenofp       fz_ps.l(usenofp.o)
+    0x08003430   0x00000040   Data   RO         4258    .constdata          fz_ps.l(fdiv.o)
+    0x08003470   0x00000094   Data   RO         4320    .constdata          c_p.l(bigflt0.o)
+    0x08003504   0x00000020   Data   RO         4484    Region$$Table       anon$$obj.o
+    0x08003524   0x0000001c   Data   RO         4326    locale$$data        c_p.l(lc_numeric_c.o)
 
 
     Execution Region ER_RW (Base: 0x20000000, Size: 0x00000074, Max: 0xffffffff, ABSOLUTE)
@@ -2026,25 +2027,25 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       760        102          0         37        192      10708   adc_lib.o
-       338         16          0          8          0       3664   ct_lib.o
-       244         32          0          2          0       7713   delay.o
-        20          0          0          0          0     207423   main.o
-       300         10          0          0          0       1540   motor_lib.o
-       300         14          0          0          0       2754   spi_lib.o
-       116         56        180          0       1536        640   startup_stm32f030.o
-       290          4          0          0          0       7191   stm32f0xx_adc.o
-       244          0          0          0          0       3131   stm32f0xx_gpio.o
-       132         18          0          0          0       2366   stm32f0xx_rcc.o
-       116         16          0          0          0       1773   stm32f0xx_spi.o
-       646        106          0          0          0       7628   stm32f0xx_tim.o
-       134          0          0          0          0       3965   stm32f0xx_usart.o
-      1448        200          0         32         36      13413   sys_lib.o
-       524         44          0         20          0       2245   system_stm32f0xx.o
-       208         28          0          9         90     154957   uart.o
+       760        102          0         37        192      10964   adc_lib.o
+       338         16          0          8          0       3896   ct_lib.o
+       244         32          0          2          0       7889   delay.o
+        20          0          0          0          0     207675   main.o
+       300         10          0          0          0       1624   motor_lib.o
+       300         14          0          0          0       2930   spi_lib.o
+       116         56        180          0       1536        668   startup_stm32f030.o
+       290          4          0          0          0       7539   stm32f0xx_adc.o
+       244          0          0          0          0       3279   stm32f0xx_gpio.o
+       132         18          0          0          0       2490   stm32f0xx_rcc.o
+       116         16          0          0          0       1857   stm32f0xx_spi.o
+       646        106          0          0          0       7972   stm32f0xx_tim.o
+       134          0          0          0          0       4141   stm32f0xx_usart.o
+      1508        212          0         32         36      13969   sys_lib.o
+       524         44          0         20          0       2389   system_stm32f0xx.o
+       208         28          0          9         90     155185   uart.o
 
     ----------------------------------------------------------------------
-      5836        646        212        116       1856     431111   Object Totals
+      5896        658        212        116       1856     434467   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         16          0          0          8          2          0   (incl. Padding)
 
@@ -2133,15 +2134,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     13120        856        452        116       1956     429363   Grand Totals
-     13120        856        452        116       1956     429363   ELF Image Totals
-     13120        856        452        116          0          0   ROM Totals
+     13180        868        452        116       1956     432719   Grand Totals
+     13180        868        452        116       1956     432719   ELF Image Totals
+     13180        868        452        116          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                13572 (  13.25kB)
+    Total RO  Size (Code + RO Data)                13632 (  13.31kB)
     Total RW  Size (RW Data + ZI Data)              2072 (   2.02kB)
-    Total ROM Size (Code + RO Data + RW Data)      13688 (  13.37kB)
+    Total ROM Size (Code + RO Data + RW Data)      13748 (  13.43kB)
 
 ==============================================================================
 
