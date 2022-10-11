@@ -27,6 +27,7 @@ enum RELAY
 typedef struct
 {
 	uint8_t Flag;
+	uint8_t Hold;
 	uint16_t count;
 }_button_state_t;
 

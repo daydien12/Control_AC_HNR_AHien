@@ -1,8 +1,10 @@
 #include "sys_lib.h"
 #include "stdio.h"
-
+//MOTOR_LEFT ve 0
 #define linear_equations(a,x,b) ((a*x)+(b))
 
+#define MODE_TEST_MOTOR_TRAI_PHAI 0
+#define MODE_TEST_MOTOR_BUTTON_TRAI_PHAI 1
 volatile int abb = 0;
 static uint16_t	VOUT_AVG = 220;
 static _time_t Time_tick;
@@ -13,7 +15,7 @@ static _sys_value_t sys_var;
 static void sys_assign_adc(void);
 
 static void sys_status_init(void);
-static void sys_status_stanby(void);
+static uint8_t sys_status_stanby(void);
 static void sys_status_normal_loading(void);
 static void sys_status_normal_overvoltage(void);
 static void sys_status_normal_undervoltage(void);
@@ -26,7 +28,7 @@ static void sys_status_error(void);
 
 static void sys_control_motor(void);
 static void sys_spi_transmission(void);
-
+static void sys_Test_motor(uint8_t mode);
 static float Table_Correction_volt_in[2][2] = {
 {0.198, -7.0297}, 
 {0.2, -9.00}
@@ -52,7 +54,9 @@ void SYS_Init_ALL(void)
   SPI_Command_Init();
 	sys_status_init();
 	sys_var.flag_stanby = 0;
-	
+	sys_var.volt_out2  = 7;
+	CT_Motor_1(1000,MOTOR_LEFT);
+	delay_ms(4500);
 }
 
 void SYS_Run(void)
@@ -60,11 +64,8 @@ void SYS_Run(void)
 	char arr[100];
 	spi_struct_type_t datatest;
 
-	
   if (BT1.Flag == 1)
   {
-		//CT_BeeP(BEEP_ON, 500);
-		CT_Relay(RELAY_ON);
     BT1.Flag = 0;
 		if(VOUT_AVG < VOUT_MAX)
 		{
@@ -74,27 +75,22 @@ void SYS_Run(void)
 
   if (BT2.Flag == 1)
   {
-		//CT_BeeP(BEEP_OFF, 0);
-		CT_Relay(RELAY_OFF);
     BT2.Flag = 0;
 		if(VOUT_AVG > VOUT_MIN)
 		{
 			VOUT_AVG--;
 		}
   }
-	//CT_Motor_1(600, MOTOR_LEFT);
-//*
+	sys_Test_motor(MODE_TEST_MOTOR_BUTTON_TRAI_PHAI);
 
-	//datatest.	byte_zero 	= 0x0;	//1 byte
-
-	//*
 	if((VIN_MIN < sys_var.volt_in)&&(sys_var.volt_in < VIN_MAX))
 	{
-		
 		if(!sys_var.flag_stanby)
 		{
-			sys_status_stanby();
-			sys_var.flag_stanby = 1;
+			if(	sys_status_stanby() == 1)
+			{
+				sys_var.flag_stanby = 1;
+			}
 		}
 		else
 		{
@@ -136,8 +132,8 @@ void SYS_Run(void)
 	{
 		sys_status_error();
 	}
-	//*/
-	
+
+	//sys_control_motor();
 	if(Time_tick.flag_time_1s)
 	{
 		Time_tick.flag_time_1s = 0;
@@ -152,7 +148,7 @@ void SYS_Run(void)
 		//((sys_var.volt_in*0.8)+138.407)
 		//Time_tick.flag_time_1s = 0;
 		//sprintf(arr, "adc0:%d \n", VOUT_AVG);
-		Send_String(arr);
+		//Send_String(arr);	
 
 		datatest.status_sig 	= sys_var.Status_sig; 	//1 byte
 		datatest. volt_in 		= sys_var.volt_in;	//2 byte
@@ -163,6 +159,7 @@ void SYS_Run(void)
 		datatest. value_freq 	= 50;	//1 byte
 		Transfer_Data(&datatest);
 	}
+	
 }
 
 static void sys_assign_adc(void)
@@ -183,6 +180,7 @@ static void sys_assign_adc(void)
 		*/
 		//*
 		sys_var.volt_in 			= linear_equations(Adc_Arr_Convert[0], Table_Correction_volt_in[0][0], Table_Correction_volt_in[0][1]);
+		/*
 		if(sys_var.volt_in <= 30)
 		{
 			sys_var.volt_in = 30;
@@ -191,8 +189,9 @@ static void sys_assign_adc(void)
 		{
 				sys_var.volt_in = 300;
 		}
-		
+		*/
 		sys_var.volt_out1 			= linear_equations(Adc_Arr_Convert[1], Table_Correction_volt_in[0][0], Table_Correction_volt_in[0][1]);
+		/*
 		if(sys_var.volt_out1 <= 30)
 		{
 			sys_var.volt_out1 = 30;
@@ -201,6 +200,8 @@ static void sys_assign_adc(void)
 		{
 				sys_var.volt_out1 = 300;
 		}
+		*/
+		
 		//sys_var.volt_out1 		= Adc_Arr_Convert[1];
 		sys_var.amp_in 				= (((float)Adc_Arr_Convert[2]*0.00738)+ (-3.7343));;
 		sys_var.value_temp 		= Adc_Arr_Convert[3];
@@ -236,6 +237,7 @@ void TIM3_IRQHandler(void) {
     {
       Time_tick.count_time_1s = 0;
       Time_tick.flag_time_1s = 1;
+			Time_tick.flag_time_count_stanby = 1;
     }
     else
     {
@@ -255,13 +257,25 @@ static void sys_status_init(void)
 	sys_var.flag_normal_loading = 0;
 }
 
-static void sys_status_stanby(void)
+static uint8_t sys_status_stanby(void)
 {
-	sys_var.Status_sig = STT_STANBY;
-	CT_Relay(RELAY_ON);
-	CT_BeeP(BEEP_OFF, 0);
-	sys_var.volt_out2 = 7;
-	sys_var.flag_normal_loading = 0;
+	if(Time_tick.flag_time_count_stanby == 1)
+	{
+		Time_tick.flag_time_count_stanby = 0;
+		if(sys_var.volt_out2 > 0)
+		{
+			sys_var.Status_sig = STT_STANBY;
+			CT_Relay(RELAY_ON);
+			CT_BeeP(BEEP_OFF, 0);
+			sys_var.volt_out2 --;
+			sys_var.flag_normal_loading = 0;
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}
+	}
 }
 static void sys_status_normal_loading(void)
 {
@@ -343,14 +357,14 @@ static void sys_status_error(void)
 	CT_BeeP(BEEP_ON, 0);
 	sys_var.flag_normal_loading = 0;
 }
-
+/*
 static void sys_control_motor(void)
 {
-	if(sys_var.volt_13m1 > VOLT13_AVG)
+	if(sys_var.volt_out1 > 220)
 	{
 		CT_Motor_1(1000,MOTOR_LEFT);
 	}
-	else if(sys_var.volt_13m1 < VOLT13_AVG)
+	else if(sys_var.volt_out1 < 220)
 	{
 		CT_Motor_1(1000,MOTOR_RIGHT);
 	}
@@ -372,8 +386,37 @@ static void sys_control_motor(void)
 		CT_Motor_2(1000,MOTOR_OFF);
 	}
 }
-
+*/
 static void sys_spi_transmission(void)
 {
 	
+}
+
+static void sys_Test_motor(uint8_t mode)
+{
+	if(mode == 1)
+	{
+		if (BT1.Hold == 1)
+		{
+				//Send_String("3");
+			CT_Motor_1(1000,MOTOR_LEFT);
+		}
+		else if (BT2.Hold == 1)
+		{
+				//Send_String("4");
+			CT_Motor_1(1000,MOTOR_RIGHT);
+
+		}
+		else
+		{
+			CT_Motor_1(1000,MOTOR_OFF);
+		}
+	}
+	else
+	{
+		CT_Motor_1(1000,MOTOR_LEFT);
+		delay_ms(4500);
+		CT_Motor_1(1000,MOTOR_RIGHT);
+		delay_ms(4500);
+	}
 }

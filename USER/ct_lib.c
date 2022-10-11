@@ -78,17 +78,24 @@ static void ct_buttonread(const uint8_t _input_signal_,_button_state_t *_button_
 {
 	if(_input_signal_ == state_bt)
 	{
-		if(_button_var_->count <= 2000)
+		if(_button_var_->count <= 200)
 		{
 			_button_var_->count++;
+			_button_var_->Hold = 0;
 			if(_button_var_->count == 50)
 			{
 					_button_var_->Flag = 1;
 			}
 		}
+		else
+		{
+			_button_var_->Hold = 1;
+			_button_var_->count = 2100;
+		}
 	}
 	else
 	{
 		_button_var_->count = 0;
+		_button_var_->Hold = 0;
 	}
 }

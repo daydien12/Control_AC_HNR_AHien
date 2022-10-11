@@ -47,6 +47,8 @@ typedef struct
 	uint8_t  flag_time_1s;
 	uint16_t count_time_20ms;
 	uint8_t  flag_time_20ms;
+	uint8_t  flag_time_count_stanby;
+	uint8_t  flag_time_count_init;
 }_time_t;
 
 typedef struct
