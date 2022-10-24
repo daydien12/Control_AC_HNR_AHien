@@ -49,6 +49,7 @@ typedef struct
 	uint8_t  flag_time_20ms;
 	uint8_t  flag_time_count_stanby;
 	uint8_t  flag_time_count_init;
+	uint16_t count_time_init_5s;
 }_time_t;
 
 typedef struct
@@ -64,6 +65,7 @@ typedef struct
 	uint16_t volt_13m2;
 	uint8_t  flag_stanby;
 	uint8_t flag_normal_loading;
+	uint8_t flag_init;
 }_sys_value_t;
 
 
