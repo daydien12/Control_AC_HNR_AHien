@@ -66,6 +66,7 @@ typedef struct
 	uint8_t  flag_stanby;
 	uint8_t flag_normal_loading;
 	uint8_t flag_init;
+	uint8_t flag_adc_control_mottor;
 }_sys_value_t;
 
 

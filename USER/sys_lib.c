@@ -1,5 +1,6 @@
 #include "sys_lib.h"
 #include "stdio.h"
+#include "IWDG.h" 
 //MOTOR_LEFT ve 0
 #define linear_equations(a,x,b) ((a*x)+(b))
 
@@ -33,9 +34,9 @@ static float Table_Correction_volt_in[2][2] = {
 {0.198, -7.0297}, 
 {0.2, -9.00}
 };
+
 void SYS_Init_ALL(void)
 {
-	
 	GPIO_InitTypeDef GPIO_InitStructure;
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 	GPIO_InitStructure.GPIO_Pin = SPISCK;
@@ -44,7 +45,6 @@ void SYS_Init_ALL(void)
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
 	GPIO_Init(SPI_CM_PORT, &GPIO_InitStructure);
-	
 	
   UART_Init();
   ADC_Init_All();
@@ -57,6 +57,7 @@ void SYS_Init_ALL(void)
 	sys_var.volt_out2  = 7;
 	sys_var.flag_init = 0;
 	Time_tick.count_time_init_5s = 0;
+	IWD_Init(5);
 }
 
 void SYS_Run(void)
@@ -82,7 +83,6 @@ void SYS_Run(void)
 	}
 	else
 	{
-		//sys_Test_motor(1);
 		if (BT1.Flag == 1)
 		{
 			BT1.Flag = 0;
@@ -112,6 +112,7 @@ void SYS_Run(void)
 			}
 			else
 			{
+				sys_control_motor();
 				if((VOUT_MIN < sys_var.volt_out1)&&(sys_var.volt_out1 < VOUT_MAX)&&(sys_var.amp_in < AMP_MAX))
 				{
 					sys_status_normal_loading();
@@ -145,27 +146,16 @@ void SYS_Run(void)
 					sys_var.Status_sig = STT_STANBY;
 				}
 			}
-			
-			if(sys_var.volt_out1 > 223)
-			{
-				CT_Motor_1(600,MOTOR_LEFT);
-			}
-			else if(sys_var.volt_out1 < 218)
-			{
-				CT_Motor_1(600,MOTOR_RIGHT);
-			}
-			else if(sys_var.volt_out1 == 220) 
-			{
-				CT_Motor_1(1000,MOTOR_OFF);
-			}
-			
 		}
 		else
 		{
 			sys_status_error();
 		}
+		
 	}
 	
+	
+		
 	if(Time_tick.flag_time_1s)
 	{
 		Time_tick.flag_time_1s = 0;
@@ -198,6 +188,7 @@ static void sys_assign_adc(void)
 	if (Adc_VarArr.adc_flag_ReadALL == 1)
 	{
 		Adc_VarArr.adc_flag_ReadALL = 0;
+		sys_var.flag_adc_control_mottor = 1;
 		//sprintf(arr, "adc0:%0.2f adc1:%d adc2:%d adc3:%d adc8:%d adc9:%d\n", (float)((Adc_Arr_Convert[0]*1.083)+136.2499), Adc_Arr_Convert[1], Adc_Arr_Convert[2], Adc_Arr_Convert[3], Adc_Arr_Convert[4], Adc_Arr_Convert[5]);
 		//sprintf(arr, "adc0:%d adc1:%d adc2:%d adc3:%d adc8:%d adc9:%d\n", Adc_Arr_Convert[0], Adc_Arr_Convert[1], Adc_Arr_Convert[2], Adc_Arr_Convert[3], Adc_Arr_Convert[4], Adc_Arr_Convert[5]);
 		//Send_String(arr);
@@ -258,11 +249,11 @@ static void SYS_TIM3_Init(void)
   NVIC_EnableIRQ(TIM3_IRQn);
 }
 
-void TIM3_IRQHandler(void) {
+void TIM3_IRQHandler(void) 
+{
   if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
   {
-		//GPIO_WriteBit(GPIOA, SPISCK, abb);
-		//abb =! abb;
+		IWD_Clear_Time_Out();
     TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
     if (Time_tick.count_time_1s >= 1000)
     {
@@ -286,7 +277,6 @@ static void sys_status_init(void)
 	sys_var.Status_sig = STT_INIT;
 	CT_Relay(RELAY_ON);
 	CT_BeeP(BEEP_OFF, 0);
-	//delay_ms(1500);
 	sys_var.flag_normal_loading = 0;
 }
 
@@ -310,6 +300,7 @@ static uint8_t sys_status_stanby(void)
 		}
 	}
 }
+
 static void sys_status_normal_loading(void)
 {
 		sys_var.Status_sig = STT_NORMAL_LOADING;
@@ -390,36 +381,36 @@ static void sys_status_error(void)
 	CT_BeeP(BEEP_ON, 0);
 	sys_var.flag_normal_loading = 0;
 }
-/*
+
 static void sys_control_motor(void)
 {
-	if(sys_var.volt_out1 > 220)
+	if(sys_var.flag_adc_control_mottor)
 	{
-		CT_Motor_1(1000,MOTOR_LEFT);
+		sys_var.flag_adc_control_mottor = 0;
+		if(sys_var.volt_in >= 180)
+		{
+			if(sys_var.volt_out1 > 223)
+			{
+				CT_Motor_1(800,MOTOR_LEFT);
+				delay_ms(50);
+			}
+			else if(sys_var.volt_out1 < 218)
+			{
+				CT_Motor_1(800,MOTOR_RIGHT);
+				delay_ms(50);
+			}
+			else if((sys_var.volt_out1 > 218) && (sys_var.volt_out1 < 223)) 
+			{
+				CT_Motor_1(1000,MOTOR_OFF);
+			}
+		}
 	}
-	else if(sys_var.volt_out1 < 220)
-	{
-		CT_Motor_1(1000,MOTOR_RIGHT);
-	}
-	else 
+	else
 	{
 		CT_Motor_1(1000,MOTOR_OFF);
 	}
-	
-	if(sys_var.volt_13m2 > VOLT13_AVG)
-	{
-		CT_Motor_2(1000,MOTOR_LEFT);
-	}
-	else if(sys_var.volt_13m2 < VOLT13_AVG)
-	{
-		CT_Motor_2(1000,MOTOR_RIGHT);
-	}
-	else 
-	{
-		CT_Motor_2(1000,MOTOR_OFF);
-	}
 }
-*/
+
 static void sys_spi_transmission(void)
 {
 	

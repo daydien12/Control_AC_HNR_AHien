@@ -133,7 +133,7 @@ uint16_t ADC_Kalman_Filter(unsigned long ADC_Value, _adc_kalman_filter_t_ *_adc_
 			_adc_kalman_->ADC_OLD_Value = 0.0;
 			_adc_kalman_->P_k1_k1 = 0.0;
 			_adc_kalman_->kalman_adc_old=0;
-			_adc_kalman_->Q = 0.00001; //Q: Regulation noise, Q increases, dynamic response becomes faster, and convergence stability becomes worse
+			_adc_kalman_->Q = 0.0001; //Q: Regulation noise, Q increases, dynamic response becomes faster, and convergence stability becomes worse
 			_adc_kalman_->R = 0.0005;    //R: Test noise, R increases, dynamic response becomes slower, convergence stability becomes better
 			_adc_kalman_->Kg = 0;
 			_adc_kalman_->P_k_k1 = 1;

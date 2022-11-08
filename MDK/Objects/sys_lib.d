@@ -39,3 +39,4 @@
 .\objects\sys_lib.o: ..\USER\spi_lib.h
 .\objects\sys_lib.o: ..\USER\adc_lib.h
 .\objects\sys_lib.o: C:\Keil_v517\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\sys_lib.o: ..\USER\IWDG.h

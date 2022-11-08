@@ -457,6 +457,11 @@
               <FileType>1</FileType>
               <FilePath>..\USER\adc_lib.c</FilePath>
             </File>
+            <File>
+              <FileName>IWDG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\IWDG.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -621,6 +626,11 @@
               <FileName>adc_lib.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\USER\adc_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>IWDG.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\IWDG.h</FilePath>
             </File>
           </Files>
         </Group>

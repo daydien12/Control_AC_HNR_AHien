@@ -7,6 +7,7 @@
 ".\objects\sys_lib.o"
 ".\objects\spi_lib.o"
 ".\objects\adc_lib.o"
+".\objects\iwdg.o"
 ".\objects\stm32f0xx_adc.o"
 ".\objects\stm32f0xx_can.o"
 ".\objects\stm32f0xx_cec.o"
