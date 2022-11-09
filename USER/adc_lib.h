@@ -48,7 +48,7 @@ typedef struct
 extern _adc_kalman_filter_t_ Kalman_OUT_ADC_1, Kalman_OUT_ADC_2, Kalman_OUT_ADC_3, Kalman_LM35, Kalman_ADC_M1, Kalman_ADC_M2;
 
 
-#define NUMBER_READ_ADC 500 
+//#define NUMBER_READ_ADC 500 
 
 //float Table_Correction[2][2];//= {{0.198, -7.0297}, {0.198, -7.0297}};
  

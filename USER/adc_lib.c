@@ -1,11 +1,13 @@
 #include "adc_lib.h"
 
-volatile uint8_t aa = 0, count_empty_time;
+volatile uint8_t count_empty_time;
 volatile _adc_value_t_ Adc_VarArr;
 static uint32_t Arr_Channel[6] = {ADC_Channel_0, ADC_Channel_1, ADC_Channel_2, ADC_Channel_3, ADC_Channel_8, ADC_Channel_9};
 static _adc_channel_e channel_read_all = ADC_Channel_0_OUT_ADC_1;
 static void read_adc_all(uint16_t *_data_, const _adc_channel_e _adc_channel_, _adc_kalman_filter_t_ *_kamal_var);
 _adc_kalman_filter_t_ Kalman_OUT_ADC_1, Kalman_OUT_ADC_2, Kalman_OUT_ADC_3, Kalman_LM35, Kalman_ADC_M1, Kalman_ADC_M2;
+
+uint16_t NUMBER_READ_ADC = 0; 
 
 void ADC_Init_All(void)
 {
@@ -96,27 +98,32 @@ void ADC_Read_All(uint16_t *_adc_arr_data_)
 	switch (channel_read_all)
 	{
 		case ADC_Channel_0_OUT_ADC_1:
+			NUMBER_READ_ADC = 500;
 			read_adc_all(&_adc_arr_data_[0], ADC_Channel_1_OUT_ADC_2, &Kalman_OUT_ADC_1);
-			
 			break;
 
 		case ADC_Channel_1_OUT_ADC_2:
+			NUMBER_READ_ADC = 500;
 			read_adc_all(&_adc_arr_data_[1], ADC_Channel_2_OUT_ADC_3, &Kalman_OUT_ADC_2);
 			break;
 
 		case ADC_Channel_2_OUT_ADC_3:
+			NUMBER_READ_ADC = 50;
 			read_adc_all(&_adc_arr_data_[2], ADC_Channel_3_ADC_LM35, &Kalman_OUT_ADC_3);
 			break;
 
 		case ADC_Channel_3_ADC_LM35:
+			NUMBER_READ_ADC = 50;
 			read_adc_all(&_adc_arr_data_[3], ADC_Channel_8_ADC_M1, &Kalman_LM35);
 			break;
 
 		case ADC_Channel_8_ADC_M1:
+			NUMBER_READ_ADC = 50;
 			read_adc_all(&_adc_arr_data_[4], ADC_Channel_9_ADC_M2, &Kalman_ADC_M1);
 			break;
 
 		case ADC_Channel_9_ADC_M2:
+			NUMBER_READ_ADC = 50;
 			read_adc_all(&_adc_arr_data_[5], ADC_Channel_0_OUT_ADC_1, &Kalman_ADC_M2);
 			Adc_VarArr.adc_flag_ReadALL = 1;
 			break;

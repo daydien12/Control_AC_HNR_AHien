@@ -3,7 +3,9 @@
 #include "IWDG.h" 
 //MOTOR_LEFT ve 0
 #define linear_equations(a,x,b) ((a*x)+(b))
-
+uint16_t map(uint16_t x, uint16_t in_min, uint16_t in_max, uint16_t out_min, uint16_t out_max) {
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 #define MODE_TEST_MOTOR_TRAI_PHAI 0
 #define MODE_TEST_MOTOR_BUTTON_TRAI_PHAI 1
 volatile int abb = 0;
@@ -54,7 +56,7 @@ void SYS_Init_ALL(void)
   SPI_Command_Init();
 
 	sys_var.flag_stanby = 0;
-	sys_var.volt_out2  = 7;
+	sys_var.volt_out2  = 10;
 	sys_var.flag_init = 0;
 	Time_tick.count_time_init_5s = 0;
 	IWD_Init(5);
@@ -100,7 +102,6 @@ void SYS_Run(void)
 				VOUT_AVG--;
 			}
 		}
-
 		if((VIN_MIN < sys_var.volt_in)&&(sys_var.volt_in < VIN_MAX))
 		{
 			if(!sys_var.flag_stanby)
@@ -112,7 +113,6 @@ void SYS_Run(void)
 			}
 			else
 			{
-				sys_control_motor();
 				if((VOUT_MIN < sys_var.volt_out1)&&(sys_var.volt_out1 < VOUT_MAX)&&(sys_var.amp_in < AMP_MAX))
 				{
 					sys_status_normal_loading();
@@ -146,15 +146,13 @@ void SYS_Run(void)
 					sys_var.Status_sig = STT_STANBY;
 				}
 			}
+			
 		}
 		else
 		{
 			sys_status_error();
 		}
-		
 	}
-	
-	
 		
 	if(Time_tick.flag_time_1s)
 	{
@@ -172,13 +170,13 @@ void SYS_Run(void)
 		//sprintf(arr, "adc0:%d \n", VOUT_AVG);
 		//Send_String(arr);	
 
-		datatest.status_sig 	= sys_var.Status_sig; 	//1 byte
-		datatest. volt_in 		= sys_var.volt_in;	//2 byte
+		datatest.status_sig 	= sys_var.Status_sig; 							//1 byte
+		datatest. volt_in 		= sys_var.volt_in;									//2 byte
 		datatest. amp_in 			=  (uint16_t)(sys_var.amp_in*100);	//4 byte
-		datatest. volt_out1 	= sys_var.volt_out1;	//2 byte
-		datatest. volt_out2 	= sys_var.volt_out2;	//2 byte
-		datatest. value_temp 	= 10;  //1 byte
-		datatest. value_freq 	= 50;	//1 byte
+		datatest. volt_out1 	= sys_var.volt_out1;								//2 byte
+		datatest. volt_out2 	= sys_var.volt_out2;								//2 byte
+		datatest. value_temp 	= 10;  															//1 byte
+		datatest. value_freq 	= 50;																//1 byte
 		Transfer_Data(&datatest);
 	}
 }
@@ -267,6 +265,10 @@ void TIM3_IRQHandler(void)
     {
       Time_tick.count_time_1s++;
     }
+		if(sys_var.flag_init)
+		{
+			sys_control_motor();
+		}
     CT_ReadAllButton();
 		ADC_Read_All(Adc_Arr_Convert);
   }
@@ -384,31 +386,35 @@ static void sys_status_error(void)
 
 static void sys_control_motor(void)
 {
+	uint16_t Speed_mottor, caculater_speed = 0;
 	if(sys_var.flag_adc_control_mottor)
 	{
 		sys_var.flag_adc_control_mottor = 0;
-		if(sys_var.volt_in >= 180)
+		if((sys_var.volt_in >= 150) && (sys_var.volt_out1 >= 150))
 		{
 			if(sys_var.volt_out1 > 223)
 			{
-				CT_Motor_1(800,MOTOR_LEFT);
-				delay_ms(50);
+				caculater_speed = (sys_var.volt_out1 - 220);
+				Speed_mottor = map(caculater_speed, 0, 80, 500,1000);
+				CT_Motor_1(Speed_mottor,MOTOR_LEFT);
 			}
 			else if(sys_var.volt_out1 < 218)
 			{
-				CT_Motor_1(800,MOTOR_RIGHT);
-				delay_ms(50);
+				caculater_speed = (220-sys_var.volt_out1);
+				Speed_mottor = map(caculater_speed, 0, 80, 500,1000);
+				CT_Motor_1(Speed_mottor,MOTOR_RIGHT);
 			}
 			else if((sys_var.volt_out1 > 218) && (sys_var.volt_out1 < 223)) 
 			{
 				CT_Motor_1(1000,MOTOR_OFF);
 			}
 		}
+		else
+		{
+			CT_Motor_1(1000,MOTOR_OFF);
+		}
 	}
-	else
-	{
-		CT_Motor_1(1000,MOTOR_OFF);
-	}
+	
 }
 
 static void sys_spi_transmission(void)
@@ -422,14 +428,11 @@ static void sys_Test_motor(uint8_t mode)
 	{
 		if (BT1.Hold == 1)
 		{
-				//Send_String("3");
 			CT_Motor_1(1000,MOTOR_LEFT);
 		}
 		else if (BT2.Hold == 1)
 		{
-				//Send_String("4");
 			CT_Motor_1(1000,MOTOR_RIGHT);
-
 		}
 		else
 		{
