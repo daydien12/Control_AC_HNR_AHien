@@ -108,7 +108,7 @@ void ADC_Read_All(uint16_t *_adc_arr_data_)
 			break;
 
 		case ADC_Channel_2_OUT_ADC_3:
-			NUMBER_READ_ADC = 50;
+			NUMBER_READ_ADC = 500;
 			read_adc_all(&_adc_arr_data_[2], ADC_Channel_3_ADC_LM35, &Kalman_OUT_ADC_3);
 			break;
 

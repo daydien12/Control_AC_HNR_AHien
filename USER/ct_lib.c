@@ -3,6 +3,8 @@
 
 #define INPUT_BT1 GPIO_ReadInputDataBit(BT_CT1_CT2_PORT, BT_CT1)
 #define INPUT_BT2 GPIO_ReadInputDataBit(BT_CT1_CT2_PORT, BT_CT2)
+
+#define ENABLE_BEEP 1
 volatile _button_state_t BT1, BT2;
 
 static void ct_buttonread(const uint8_t _input_signal_,_button_state_t *_button_var_);
@@ -39,20 +41,23 @@ void CT_Init(void)
 
 void CT_BeeP(const uint8_t _mode_beep_, const uint16_t _time_)
 {
-	if(_mode_beep_ == BEEP_ON)
+	if(ENABLE_BEEP == 1)
 	{
-		GPIO_WriteBit(CT_BEEP_PORT, CT_BEEP, Bit_SET);
-	}
-	else if(_mode_beep_ == BEEP_OFF)
-	{
-		GPIO_WriteBit(CT_BEEP_PORT, CT_BEEP, Bit_RESET);
-	}
-	else if(_mode_beep_ == BEEP_BEEP)
-	{
-		GPIO_WriteBit(CT_BEEP_PORT, CT_BEEP, Bit_SET);
-		delay_ms(_time_/2);
-		GPIO_WriteBit(CT_BEEP_PORT, CT_BEEP, Bit_RESET);
-		delay_ms(_time_/2);
+		if(_mode_beep_ == BEEP_ON)
+		{
+			GPIO_WriteBit(CT_BEEP_PORT, CT_BEEP, Bit_SET);
+		}
+		else if(_mode_beep_ == BEEP_OFF)
+		{
+			GPIO_WriteBit(CT_BEEP_PORT, CT_BEEP, Bit_RESET);
+		}
+		else if(_mode_beep_ == BEEP_BEEP)
+		{
+			GPIO_WriteBit(CT_BEEP_PORT, CT_BEEP, Bit_SET);
+			delay_ms(_time_/2);
+			GPIO_WriteBit(CT_BEEP_PORT, CT_BEEP, Bit_RESET);
+			delay_ms(_time_/2);
+		}
 	}
 }
 

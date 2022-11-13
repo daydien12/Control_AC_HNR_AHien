@@ -56,7 +56,7 @@ void SYS_Init_ALL(void)
   SPI_Command_Init();
 
 	sys_var.flag_stanby = 0;
-	sys_var.volt_out2  = 10;
+	sys_var.volt_out2  = 7;
 	sys_var.flag_init = 0;
 	Time_tick.count_time_init_5s = 0;
 	IWD_Init(5);
@@ -113,37 +113,41 @@ void SYS_Run(void)
 			}
 			else
 			{
-				if((VOUT_MIN < sys_var.volt_out1)&&(sys_var.volt_out1 < VOUT_MAX)&&(sys_var.amp_in < AMP_MAX))
+				if(Time_tick.flag_time_count_handle)
 				{
-					sys_status_normal_loading();
-				}
-				else if((VOUT_MAX <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_NOR_OVERVOL_MAX)&&(sys_var.amp_in < AMP_MAX))
-				{
-					sys_status_normal_overvoltage();
-				}
-				else if((VOUT_NOR_UNDERVOL_MIN <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_MIN)&&(sys_var.amp_in < AMP_MAX))
-				{
-					sys_status_normal_undervoltage();
-				}
-				else if((VOUT_MIN <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_MAX)&&(AMP_MAX <= sys_var.amp_in)&&(sys_var.amp_in < AMP_ABNOR_MAX))
-				{
-					sys_status_normal_overload();
-				}
-				else if((sys_var.volt_out1 > VOUT_NOR_OVERVOL_MAX))
-				{
-					sys_status_abnormal_overvoltage();
-				}
-				else if((sys_var.volt_out1 < VOUT_NOR_UNDERVOL_MIN))
-				{
-					sys_status_abnormal_undervoltage();
-				}
-				else if((sys_var.amp_in > AMP_ABNOR_MAX))
-				{
-					sys_status_abnormal_overload();
-				}
-				else 
-				{
-					sys_var.Status_sig = STT_STANBY;
+					Time_tick.flag_time_count_handle = 0;
+					if((VOUT_MIN < sys_var.volt_out1)&&(sys_var.volt_out1 < VOUT_MAX)&&(sys_var.amp_in < AMP_MAX))
+					{
+						sys_status_normal_loading();
+					}
+					else if((VOUT_MAX <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_NOR_OVERVOL_MAX)&&(sys_var.amp_in < AMP_MAX))
+					{
+						sys_status_normal_overvoltage();
+					}
+					else if((VOUT_NOR_UNDERVOL_MIN <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_MIN)&&(sys_var.amp_in < AMP_MAX))
+					{
+						sys_status_normal_undervoltage();
+					}
+					else if((VOUT_MIN <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_MAX)&&(AMP_MAX <= sys_var.amp_in)&&(sys_var.amp_in < AMP_ABNOR_MAX))
+					{
+						sys_status_normal_overload();
+					}
+					else if((sys_var.volt_out1 > VOUT_NOR_OVERVOL_MAX))
+					{
+						sys_status_abnormal_overvoltage();
+					}
+					else if((sys_var.volt_out1 < VOUT_NOR_UNDERVOL_MIN))
+					{
+						sys_status_abnormal_undervoltage();
+					}
+					else if((sys_var.amp_in > AMP_ABNOR_MAX))
+					{
+						sys_status_abnormal_overload();
+					}
+					else 
+					{
+						sys_var.Status_sig = STT_STANBY;
+					}
 				}
 			}
 			
@@ -265,6 +269,31 @@ void TIM3_IRQHandler(void)
     {
       Time_tick.count_time_1s++;
     }
+		
+		if(170 < sys_var.volt_out1 || sys_var.volt_out1 > 250)
+		{
+			Time_tick.flag_start_count_handle = 1;
+			Time_tick.flag_time_count_handle = 0;
+		}
+		
+		if(Time_tick.flag_start_count_handle)
+		{
+			if ((Time_tick.count_time_handle_2s >= 5000)||((210 > sys_var.volt_out1) && (sys_var.volt_out1 < 230)))
+			{
+				Time_tick.flag_time_count_handle = 1;
+				Time_tick.count_time_handle_2s = 0;
+				Time_tick.flag_start_count_handle = 0;
+			}
+			else
+			{
+				Time_tick.count_time_handle_2s++;
+			}
+		}
+		else
+		{
+			Time_tick.flag_time_count_handle = 1;
+		}
+		
 		if(sys_var.flag_init)
 		{
 			sys_control_motor();

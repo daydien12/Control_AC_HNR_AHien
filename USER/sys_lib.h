@@ -49,7 +49,10 @@ typedef struct
 	uint8_t  flag_time_20ms;
 	uint8_t  flag_time_count_stanby;
 	uint8_t  flag_time_count_init;
+	uint8_t  flag_time_count_handle;
+	uint8_t  flag_start_count_handle;
 	uint16_t count_time_init_5s;
+	uint16_t count_time_handle_2s;
 }_time_t;
 
 typedef struct
