@@ -8,6 +8,10 @@ extern "C"{
 #include "stm32f0xx.h"
 #include "stm32f0xx_gpio.h"
 
+#define GPIO_READ_FREQUENCY 			GPIO_Pin_3
+#define PORT_READ_FREQUENCY 			GPIOB
+#define INPUT_PC817 GPIO_ReadInputDataBit(PORT_READ_FREQUENCY, GPIO_READ_FREQUENCY)
+	
 #define OUT_ADC_1 		GPIO_Pin_0
 #define OUT_ADC_2 		GPIO_Pin_1
 #define OUT_ADC_3			GPIO_Pin_2

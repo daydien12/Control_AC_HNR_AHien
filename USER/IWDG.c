@@ -60,7 +60,7 @@ void IWD_Init(float time_out)
   IWDG->KR = 0xCCCC;   
 }
 
-void IWD_Clear_Time_Out()
+void IWD_Clear_Time_Out(void)
 {
 	 IWDG->KR = 0xAAAA; 
 }

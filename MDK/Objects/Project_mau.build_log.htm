@@ -22,12 +22,20 @@ Dialog DLL:      TARMCM1.DLL V1.9.0.0
  
 <h2>Project:</h2>
 C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\Control_AC_HNR_AHien\MDK\Project_mau.uvprojx
-Project File Date:  11/08/2022
+Project File Date:  12/05/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 1 (build 61)', folder: 'C:\Keil_v517\ARM\ARMCC\Bin'
 Build target 'Project'
-".\Objects\Project_mau.axf" - 0 Error(s), 0 Warning(s).
+compiling sys_lib.c...
+..\USER\sys_lib.c(81): warning:  #177-D: variable "arr" was declared but never referenced
+  	char arr[100];
+..\USER\sys_lib.c(440): warning:  #177-D: function "sys_Test_motor" was declared but never referenced
+  static void sys_Test_motor(uint8_t mode)
+..\USER\sys_lib.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=11032 RO-data=404 RW-data=136 ZI-data=1968  
+".\Objects\Project_mau.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\Control_AC_HNR_AHien\MDK\RTE

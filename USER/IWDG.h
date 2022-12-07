@@ -17,7 +17,7 @@
 #define LsiFreq (40000)
 	 
 void IWD_Init(float time_out);
-void IWD_Clear_Time_Out();
+void IWD_Clear_Time_Out(void);
  
 #ifdef __cplusplus
 }

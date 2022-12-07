@@ -10,8 +10,7 @@ unsigned int RXI = 0;
 char temp_char;
 char a[10];
 
-
-
+#define ENA_UART 0
 void UART_Init(void)
 {
   USART_InitTypeDef USART_InitStruct;
@@ -22,7 +21,8 @@ void UART_Init(void)
 
   GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_1);
   GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_1);
-/*
+	
+#if ENA_UART
   GPIO_InitStruct.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_10;
   GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
   GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
@@ -44,7 +44,7 @@ void UART_Init(void)
   USART_Cmd(USART1, ENABLE);
   USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
   NVIC_EnableIRQ(USART1_IRQn);
-	*/
+#endif
 }
 
 

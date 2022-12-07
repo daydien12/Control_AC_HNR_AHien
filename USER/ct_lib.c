@@ -1,8 +1,8 @@
 #include "ct_lib.h"
 #include "pin_define.h"
 
-#define INPUT_BT1 GPIO_ReadInputDataBit(BT_CT1_CT2_PORT, BT_CT1)
-#define INPUT_BT2 GPIO_ReadInputDataBit(BT_CT1_CT2_PORT, BT_CT2)
+#define INPUT_BT1 	GPIO_ReadInputDataBit(BT_CT1_CT2_PORT, BT_CT1)
+#define INPUT_BT2 	GPIO_ReadInputDataBit(BT_CT1_CT2_PORT, BT_CT2)
 
 #define ENABLE_BEEP 1
 volatile _button_state_t BT1, BT2;
@@ -37,6 +37,14 @@ void CT_Init(void)
   GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
   GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
   GPIO_Init(BT_CT1_CT2_PORT, &GPIO_InitStruct);
+	
+	/*================(Config INPUT FREQUENCY)================*/
+  GPIO_InitStruct.GPIO_Pin = GPIO_READ_FREQUENCY;
+  GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+  GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
+  GPIO_Init(PORT_READ_FREQUENCY, &GPIO_InitStruct);
 }
 
 void CT_BeeP(const uint8_t _mode_beep_, const uint16_t _time_)

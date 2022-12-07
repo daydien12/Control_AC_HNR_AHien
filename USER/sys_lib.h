@@ -47,12 +47,11 @@ typedef struct
 	uint8_t  flag_time_1s;
 	uint16_t count_time_20ms;
 	uint8_t  flag_time_20ms;
-	uint8_t  flag_time_count_stanby;
-	uint8_t  flag_time_count_init;
-	uint8_t  flag_time_count_handle;
-	uint8_t  flag_start_count_handle;
+
+	uint8_t	 count_frequency;
 	uint16_t count_time_init_5s;
-	uint16_t count_time_handle_2s;
+
+		
 }_time_t;
 
 typedef struct
@@ -66,13 +65,12 @@ typedef struct
 	uint16_t value_freq;
 	uint16_t volt_13m1;
 	uint16_t volt_13m2;
-	uint8_t  flag_stanby;
+	uint8_t flag_stanby;
 	uint8_t flag_normal_loading;
 	uint8_t flag_init;
 	uint8_t flag_adc_control_mottor;
+	uint8_t frequency;
 }_sys_value_t;
-
-
 
 void SYS_Init_ALL(void);
 void SYS_Run(void);	
