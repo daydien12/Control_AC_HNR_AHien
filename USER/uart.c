@@ -10,7 +10,7 @@ unsigned int RXI = 0;
 char temp_char;
 char a[10];
 
-#define ENA_UART 0
+#define ENA_UART 1
 void UART_Init(void)
 {
   USART_InitTypeDef USART_InitStruct;

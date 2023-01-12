@@ -4,7 +4,7 @@
 #define INPUT_BT1 	GPIO_ReadInputDataBit(BT_CT1_CT2_PORT, BT_CT1)
 #define INPUT_BT2 	GPIO_ReadInputDataBit(BT_CT1_CT2_PORT, BT_CT2)
 
-#define ENABLE_BEEP 1
+#define ENABLE_BEEP 0
 volatile _button_state_t BT1, BT2;
 
 static void ct_buttonread(const uint8_t _input_signal_,_button_state_t *_button_var_);

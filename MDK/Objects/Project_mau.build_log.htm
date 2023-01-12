@@ -5,7 +5,7 @@
 <h2>Tool Versions:</h2>
 IDE-Version: µVision V5.17.0.0
 Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: b b, bb, LIC=VGXG8-35C6P-012P1-CNMQA-XGR99-4H7GQ
+License Information: bien bien, bien, LIC=HN0AE-54DGG-TGQ7T-RNEZM-I0FQP-9VNZS
  
 Tool Versions:
 Toolchain:       MDK-ARM Standard  Version: 5.17
@@ -21,28 +21,50 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
 Dialog DLL:      TARMCM1.DLL V1.9.0.0
  
 <h2>Project:</h2>
-C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\Control_AC_HNR_AHien\MDK\Project_mau.uvprojx
-Project File Date:  12/05/2022
+C:\Users\nhanma\Documents\github\Control_AC_HNR_AHien\MDK\Project_mau.uvprojx
+Project File Date:  12/13/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 1 (build 61)', folder: 'C:\Keil_v517\ARM\ARMCC\Bin'
 Build target 'Project'
 compiling sys_lib.c...
-..\USER\sys_lib.c(81): warning:  #177-D: variable "arr" was declared but never referenced
-  	char arr[100];
-..\USER\sys_lib.c(440): warning:  #177-D: function "sys_Test_motor" was declared but never referenced
+..\USER\sys_lib.c(82): warning:  #550-D: variable "datatest" was set but never used
+  	spi_struct_type_t datatest;
+..\USER\sys_lib.c(13): warning:  #177-D: variable "VOUT_AVG" was declared but never referenced
+  static uint16_t	VOUT_AVG = 220;
+..\USER\sys_lib.c(316): warning:  #177-D: function "sys_status_init" was declared but never referenced
+  static void sys_status_init(void)
+..\USER\sys_lib.c(324): warning:  #177-D: function "sys_status_stanby" was declared but never referenced
+  static void sys_status_stanby(void)
+..\USER\sys_lib.c(332): warning:  #177-D: function "sys_status_normal_loading" was declared but never referenced
+  static void sys_status_normal_loading(void)
+..\USER\sys_lib.c(346): warning:  #177-D: function "sys_status_normal_overvoltage" was declared but never referenced
+  static void sys_status_normal_overvoltage(void)
+..\USER\sys_lib.c(355): warning:  #177-D: function "sys_status_normal_undervoltage" was declared but never referenced
+  static void sys_status_normal_undervoltage(void)
+..\USER\sys_lib.c(364): warning:  #177-D: function "sys_status_normal_overload" was declared but never referenced
+  static void sys_status_normal_overload(void)
+..\USER\sys_lib.c(373): warning:  #177-D: function "sys_status_abnormal_overvoltage" was declared but never referenced
+  static void sys_status_abnormal_overvoltage(void)
+..\USER\sys_lib.c(382): warning:  #177-D: function "sys_status_abnormal_undervoltage" was declared but never referenced
+  static void sys_status_abnormal_undervoltage(void)
+..\USER\sys_lib.c(391): warning:  #177-D: function "sys_status_abnormal_overload" was declared but never referenced
+  static void sys_status_abnormal_overload(void)
+..\USER\sys_lib.c(405): warning:  #177-D: function "sys_status_error" was declared but never referenced
+  static void sys_status_error(void)
+..\USER\sys_lib.c(446): warning:  #177-D: function "sys_Test_motor" was declared but never referenced
   static void sys_Test_motor(uint8_t mode)
-..\USER\sys_lib.c: 2 warnings, 0 errors
+..\USER\sys_lib.c: 13 warnings, 0 errors
 linking...
-Program Size: Code=11032 RO-data=404 RW-data=136 ZI-data=1968  
-".\Objects\Project_mau.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=10044 RO-data=404 RW-data=156 ZI-data=1972  
+".\Objects\Project_mau.axf" - 0 Error(s), 13 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
-  C:\Users\nguye\OneDrive\Documents\GitHub\Control_AC_HNR_AHien\Control_AC_HNR_AHien\MDK\RTE
+  C:\Users\nhanma\Documents\github\Control_AC_HNR_AHien\MDK\RTE
   C:\Keil_v517\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

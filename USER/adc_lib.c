@@ -16,15 +16,15 @@ void ADC_Init_All(void)
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 
-  GPIO_InitStructure.GPIO_Pin = OUT_ADC_1 | OUT_ADC_2 | OUT_ADC_3 | LM35;
+  GPIO_InitStructure.GPIO_Pin = OUT_ADC_1 | OUT_ADC_2 | OUT_ADC_3;// | LM35;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
   GPIO_Init(OUT_ADC_1_2_3_LM35_PORT, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.GPIO_Pin = ADC_M1 | ADC_M2;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
-  GPIO_Init(ADC_M1_M2_PORT, &GPIO_InitStructure);
+//	GPIO_InitStructure.GPIO_Pin = ADC_M1 | ADC_M2;
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+//  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+//  GPIO_Init(ADC_M1_M2_PORT, &GPIO_InitStructure);
 
   ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;
   ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
@@ -65,7 +65,8 @@ static void read_adc_all(uint16_t *_data_, const _adc_channel_e _adc_channel_, _
 			{
 				count_empty_time = 0;
 				Adc_VarArr.adc_config = 0;
-				*_data_ = ADC_Kalman_Filter(Adc_VarArr.adc_value, _kamal_var);
+				//*_data_ = ADC_Kalman_Filter(Adc_VarArr.adc_value, _kamal_var);
+				*_data_ = Adc_VarArr.adc_value;//ADC_Kalman_Filter(Adc_VarArr.adc_value, _kamal_var);
 				channel_read_all = _adc_channel_;
 			}
 		}
@@ -97,18 +98,20 @@ void ADC_Read_All(uint16_t *_adc_arr_data_)
 	switch (channel_read_all)
 	{
 		case ADC_Channel_0_OUT_ADC_1:
-			NUMBER_READ_ADC = 500;
+			NUMBER_READ_ADC = 600;
 			read_adc_all(&_adc_arr_data_[0], ADC_Channel_1_OUT_ADC_2, &Kalman_OUT_ADC_1);
 			break;
 
 		case ADC_Channel_1_OUT_ADC_2:
-			NUMBER_READ_ADC = 500;
+			NUMBER_READ_ADC = 600;
 			read_adc_all(&_adc_arr_data_[1], ADC_Channel_2_OUT_ADC_3, &Kalman_OUT_ADC_2);
 			break;
 
 		case ADC_Channel_2_OUT_ADC_3:
-			NUMBER_READ_ADC = 50;
-			read_adc_all(&_adc_arr_data_[2], ADC_Channel_3_ADC_LM35, &Kalman_OUT_ADC_3);
+			NUMBER_READ_ADC = 600;
+			read_adc_all(&_adc_arr_data_[2], ADC_Channel_0_OUT_ADC_1, &Kalman_OUT_ADC_3);
+			Adc_VarArr.adc_flag_ReadALL = 1;
+			//read_adc_all(&_adc_arr_data_[2], ADC_Channel_3_ADC_LM35, &Kalman_OUT_ADC_3);
 			break;
 
 		case ADC_Channel_3_ADC_LM35:

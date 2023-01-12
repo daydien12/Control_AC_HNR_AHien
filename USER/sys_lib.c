@@ -1,7 +1,7 @@
 #include "sys_lib.h"
 #include "stdio.h"
 #include "IWDG.h" 
-
+uint8_t stt = 0;
 //MOTOR_LEFT ve 0
 #define linear_equations(a,x,b) ((a*x)+(b))
 uint16_t map(uint16_t x, uint16_t in_min, uint16_t in_max, uint16_t out_min, uint16_t out_max) {
@@ -63,9 +63,9 @@ void SYS_Init_ALL(void)
   UART_Init();
   ADC_Init_All();
   CT_Init();
-  CT_Motor_Init();
+  //CT_Motor_Init();
   SYS_TIM3_Init();
-  SPI_Command_Init();
+  //SPI_Command_Init();
 
 	sys_var.flag_stanby = 0;
 	sys_var.volt_out2  = 7;
@@ -73,101 +73,107 @@ void SYS_Init_ALL(void)
 	Time_tick.count_time_init_5s = 0;
 	IWD_Init(5);
 	sys_status_reset();
-	//Send_String("reset\n");
+	Send_String("reset\n");
 }
 
 void SYS_Run(void)
 {
 	char arr[100];
 	spi_struct_type_t datatest;
-	
-	if(sys_var.flag_init == 0)
-	{
-		sys_status_init();
-		CT_Motor_1(1000,MOTOR_LEFT);
-		if(Time_tick.count_time_init_5s >= 4)
-		{
-			sys_var.flag_init = 1;
-			sys_status_stanby();
-		}
-		else
-		{
-			Time_tick.count_time_init_5s++;
-		}
-		delay_ms(1000);
-	}
-	else
-	{
-		if (BT1.Flag == 1)
-		{
-			BT1.Flag = 0;
-			if(VOUT_AVG < VOUT_MAX)
-			{
-				VOUT_AVG++;
-			}
-		}
+//	
+//	if(sys_var.flag_init == 0)
+//	{
+//		sys_status_init();
+//		CT_Motor_1(1000,MOTOR_LEFT);
+//		if(Time_tick.count_time_init_5s >= 4)
+//		{
+//			sys_var.flag_init = 1;
+//			sys_status_stanby();
+//			//sys_var.volt_out2 = 7;
+//		}
+//		else
+//		{
+//			Time_tick.count_time_init_5s++;
+//		}
+//		delay_ms(1000);
+//	}
+//	else
+//	{
+//		if (BT1.Flag == 1)
+//		{
+//			BT1.Flag = 0;
+//			if(VOUT_AVG < VOUT_MAX)
+//			{
+//				VOUT_AVG++;
+//			}
+//		}
 
-		if (BT2.Flag == 1)
-		{
-			BT2.Flag = 0;
-			if(VOUT_AVG > VOUT_MIN)
-			{
-				VOUT_AVG--;
-			}
-		}
-		
-		if((VIN_MIN < sys_var.volt_in)&&(sys_var.volt_in < VIN_MAX))
-		{
-			if(!sys_var.flag_stanby)
-			{
-				sys_var.volt_out2--;
-				if(sys_var.volt_out2 == 0)
-				{
-					sys_var.flag_stanby = 1;
-				}
-				delay_ms(1000);
-			}
-			else
-			{
-				if((VOUT_MIN < sys_var.volt_out1)&&(sys_var.volt_out1 < VOUT_MAX)&&(sys_var.amp_in < AMP_MAX))
-				{
-					sys_status_normal_loading();
-				}
-				else if((VOUT_MAX <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_NOR_OVERVOL_MAX)&&(sys_var.amp_in < AMP_MAX))
-				{
-					sys_status_normal_overvoltage();
-				}
-				else if((VOUT_NOR_UNDERVOL_MIN <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_MIN)&&(sys_var.amp_in < AMP_MAX))
-				{
-					sys_status_normal_undervoltage();
-				}
-				else if((VOUT_MIN <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_MAX)&&(AMP_MAX <= sys_var.amp_in)&&(sys_var.amp_in < AMP_ABNOR_MAX))
-				{
-					sys_status_normal_overload();
-				}
-				else if((sys_var.volt_out1 > VOUT_NOR_OVERVOL_MAX))
-				{
-					sys_status_abnormal_overvoltage();
-				}
-				else if((sys_var.volt_out1 < VOUT_NOR_UNDERVOL_MIN))
-				{
-					sys_status_abnormal_undervoltage();
-				}
-				else if((sys_var.amp_in > AMP_ABNOR_MAX))
-				{
-					sys_status_abnormal_overload();
-				}
-				else 
-				{
-					sys_var.Status_sig = STT_STANBY;
-				}
-			}
-		}
-		else
-		{
-			sys_status_error();
-		}
-	}
+//		if (BT2.Flag == 1)
+//		{
+//			BT2.Flag = 0;
+//			if(VOUT_AVG > VOUT_MIN)
+//			{
+//				VOUT_AVG--;
+//			}
+//		}
+//		
+//		if((VIN_MIN < sys_var.volt_in)&&(sys_var.volt_in < VIN_MAX))
+//		{
+//			if(!sys_var.flag_stanby)
+//			{
+//				
+//				if(sys_var.volt_out2 <= 1)
+//				{
+//					sys_var.flag_stanby = 1;
+//					sys_var.volt_out2 = 0;
+//				}
+//				else
+//				{
+//					sys_var.volt_out2--;
+//				}
+//				delay_ms(1000);
+//			}
+//			else
+//			{
+//				if((VOUT_MIN < sys_var.volt_out1)&&(sys_var.volt_out1 < VOUT_MAX)&&(sys_var.amp_in < AMP_MAX))
+//				{
+//					sys_status_normal_loading();
+//				}
+//				else if((VOUT_MAX <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_NOR_OVERVOL_MAX)&&(sys_var.amp_in < AMP_MAX))
+//				{
+//					sys_status_normal_overvoltage();
+//				}
+//				else if((VOUT_NOR_UNDERVOL_MIN <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_MIN)&&(sys_var.amp_in < AMP_MAX))
+//				{
+//					sys_status_normal_undervoltage();
+//				}
+//				else if((VOUT_MIN <= sys_var.volt_out1)&&(sys_var.volt_out1 <= VOUT_MAX)&&(AMP_MAX <= sys_var.amp_in)&&(sys_var.amp_in < AMP_ABNOR_MAX))
+//				{
+//					sys_status_normal_overload();
+//				}
+//				else if((sys_var.volt_out1 > VOUT_NOR_OVERVOL_MAX))
+//				{
+//					sys_status_abnormal_overvoltage();
+//				}
+//				else if((sys_var.volt_out1 < VOUT_NOR_UNDERVOL_MIN))
+//				{
+//					sys_status_abnormal_undervoltage();
+//				}
+//				else if((sys_var.amp_in > AMP_ABNOR_MAX))
+//				{
+//					sys_status_abnormal_overload();
+//				}
+//				else 
+//				{
+//					sys_var.Status_sig = STT_STANBY;
+//				}
+//			}
+//		}
+//		else
+//		{
+//			sys_status_error();
+//		}
+//	}
 	
 	if(Time_tick.flag_time_1s)
 	{
@@ -177,11 +183,11 @@ void SYS_Run(void)
 		
 		//sprintf(arr, "adc0:%d adc1:%d adc2:%f adc3:%d adc8:%d adc9:%d\n",  sys_var.volt_in, sys_var.volt_out1, sys_var.amp_in, sys_var.value_temp, sys_var.volt_13m1, sys_var.volt_13m2);
 		//sprintf(arr, "Variable 1: %f | %f\n", sys_var.amp_in*100, (float)((float)((sys_var.amp_in*sys_var.amp_in)*2.2) - (float)(sys_var.amp_in*30.7) + (106)));
-		//sprintf(arr, "adc0:%d adc1:%d adc2:%d adc3:%d adc8:%d adc9:%d\n", Adc_Arr_Convert[0], Adc_Arr_Convert[1], Adc_Arr_Convert[2], Adc_Arr_Convert[3], Adc_Arr_Convert[4], Adc_Arr_Convert[5]);
+		sprintf(arr, "adc0:%d adc1:%d adc2:%d adc3:%d adc8:%d adc9:%d\n", Adc_Arr_Convert[0], Adc_Arr_Convert[1], Adc_Arr_Convert[2], Adc_Arr_Convert[3], Adc_Arr_Convert[4], Adc_Arr_Convert[5]);
 		//Send_String(arr);
 		//sprintf(arr, "adc0:%d adc1:%d volt_in:%d volt_out1:%d PC817:%d\n", Adc_Arr_Convert[0], Adc_Arr_Convert[1], sys_var.volt_in, sys_var.volt_out1, sys_var.frequency);
 		//sprintf(arr, "adc0:%d adc1:%d in:%d out1:%d  out2:%d init:%d\n", Adc_Arr_Convert[0], Adc_Arr_Convert[1], sys_var.volt_in, sys_var.volt_out1, sys_var.volt_out2, Time_tick.count_time_init_5s);
-		//Send_String(arr);
+		Send_String(arr);
 		
 		datatest.status_sig 	= sys_var.Status_sig; 							//1 byte
 		datatest. volt_in 		= sys_var.volt_in;									//2 byte
@@ -190,7 +196,7 @@ void SYS_Run(void)
 		datatest. volt_out2 	= sys_var.volt_out2;								//2 byte
 		datatest. value_temp 	= 10;  															//1 byte
 		datatest. value_freq 	= sys_var.frequency;								//1 byte
-		Transfer_Data(&datatest);
+		//Transfer_Data(&datatest);
 	}
 }
 
@@ -248,8 +254,8 @@ static void SYS_TIM3_Init(void)
   TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 
-  TIM_TimeBaseStructure.TIM_Period = 7995;
-  TIM_TimeBaseStructure.TIM_Prescaler = 0;
+  TIM_TimeBaseStructure.TIM_Period = 10-1;
+  TIM_TimeBaseStructure.TIM_Prescaler = 4800-1;
   TIM_TimeBaseStructure.TIM_ClockDivision = 0;
   TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
   TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);

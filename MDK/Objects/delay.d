@@ -31,3 +31,4 @@
 .\objects\delay.o: ..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_wwdg.h
 .\objects\delay.o: ..\Libraries\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_misc.h
 .\objects\delay.o: ..\USER\Delay.h
+.\objects\delay.o: ..\USER\pin_define.h
