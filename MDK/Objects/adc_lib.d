@@ -35,3 +35,8 @@
 .\objects\adc_lib.o: ..\USER\stm32f0xx.h
 .\objects\adc_lib.o: ..\USER\Delay.h
 .\objects\adc_lib.o: ..\USER\pin_define.h
+.\objects\adc_lib.o: ..\USER\sys_lib.h
+.\objects\adc_lib.o: ..\USER\uart.h
+.\objects\adc_lib.o: ..\USER\ct_lib.h
+.\objects\adc_lib.o: ..\USER\motor_lib.h
+.\objects\adc_lib.o: ..\USER\spi_lib.h

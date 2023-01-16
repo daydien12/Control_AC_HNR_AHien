@@ -72,8 +72,11 @@ typedef struct
 	uint8_t frequency;
 }_sys_value_t;
 
+extern uint8_t sys_test_pwm; 
+
 void SYS_Init_ALL(void);
 void SYS_Run(void);	
+void SYS_Test_Pwm(void);
 #ifdef __cplusplus
 }
 #endif

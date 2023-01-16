@@ -1,7 +1,8 @@
 #include "sys_lib.h"
 #include "stdio.h"
 #include "IWDG.h" 
-uint8_t stt = 0;
+#define ENA_TEST_FREQUENCY 1
+uint8_t sys_test_pwm = 0;
 //MOTOR_LEFT ve 0
 #define linear_equations(a,x,b) ((a*x)+(b))
 uint16_t map(uint16_t x, uint16_t in_min, uint16_t in_max, uint16_t out_min, uint16_t out_max) {
@@ -49,7 +50,7 @@ static float Table_Correction_volt_out[3][2] =
 
 void SYS_Init_ALL(void)
 {
-	/*
+	#if (ENA_TEST_FREQUENCY == 1)
 	GPIO_InitTypeDef GPIO_InitStructure;
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 	GPIO_InitStructure.GPIO_Pin = SPIMISO;
@@ -58,15 +59,16 @@ void SYS_Init_ALL(void)
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
 	GPIO_Init(SPI_CM_PORT, &GPIO_InitStructure);
-	*/
+	#endif
 	
   UART_Init();
   ADC_Init_All();
   CT_Init();
   //CT_Motor_Init();
   SYS_TIM3_Init();
-  //SPI_Command_Init();
-
+	#if (ENA_TEST_FREQUENCY == 0)
+  SPI_Command_Init();
+	#endif
 	sys_var.flag_stanby = 0;
 	sys_var.volt_out2  = 7;
 	sys_var.flag_init = 0;
@@ -188,7 +190,7 @@ void SYS_Run(void)
 		//sprintf(arr, "adc0:%d adc1:%d volt_in:%d volt_out1:%d PC817:%d\n", Adc_Arr_Convert[0], Adc_Arr_Convert[1], sys_var.volt_in, sys_var.volt_out1, sys_var.frequency);
 		//sprintf(arr, "adc0:%d adc1:%d in:%d out1:%d  out2:%d init:%d\n", Adc_Arr_Convert[0], Adc_Arr_Convert[1], sys_var.volt_in, sys_var.volt_out1, sys_var.volt_out2, Time_tick.count_time_init_5s);
 		Send_String(arr);
-		
+		#if (ENA_TEST_FREQUENCY == 0)
 		datatest.status_sig 	= sys_var.Status_sig; 							//1 byte
 		datatest. volt_in 		= sys_var.volt_in;									//2 byte
 		datatest. amp_in 			= (uint16_t)(sys_var.amp_in*100);		//4 byte
@@ -196,9 +198,12 @@ void SYS_Run(void)
 		datatest. volt_out2 	= sys_var.volt_out2;								//2 byte
 		datatest. value_temp 	= 10;  															//1 byte
 		datatest. value_freq 	= sys_var.frequency;								//1 byte
-		//Transfer_Data(&datatest);
+		Transfer_Data(&datatest);
+		#endif
 	}
 }
+
+
 
 static void sys_assign_adc(void)
 {
@@ -290,26 +295,26 @@ void TIM3_IRQHandler(void)
     CT_ReadAllButton();
 		ADC_Read_All(Adc_Arr_Convert);
 		
-		if(INPUT_PC817 == 1)
-		{
-			Time_tick.count_frequency++;
-		}
-		else
-		{
-			if(Time_tick.count_frequency > 10)
-			{
-				sys_var.frequency = (1.0/(float)Time_tick.count_frequency)*1000;
-				if(sys_var.frequency > 48 && sys_var.frequency < 58)
-				{
-					sys_var.frequency = 50;
-				}
-				else if(sys_var.frequency >= 58 && sys_var.frequency < 68)
-				{
-					sys_var.frequency = 60;
-				}
-			}
-			Time_tick.count_frequency = 0;
-		}
+//		if(INPUT_PC817 == 1)
+//		{
+//			Time_tick.count_frequency++;
+//		}
+//		else
+//		{
+//			if(Time_tick.count_frequency > 10)
+//			{
+//				sys_var.frequency = (1.0/(float)Time_tick.count_frequency)*1000;
+//				if(sys_var.frequency > 48 && sys_var.frequency < 58)
+//				{
+//					sys_var.frequency = 50;
+//				}
+//				else if(sys_var.frequency >= 58 && sys_var.frequency < 68)
+//				{
+//					sys_var.frequency = 60;
+//				}
+//			}
+//			Time_tick.count_frequency = 0;
+//		}
   }
 }
 
@@ -467,4 +472,9 @@ static void sys_Test_motor(uint8_t mode)
 		CT_Motor_1(1000,MOTOR_RIGHT);
 		delay_ms(4500);
 	}
+}
+void SYS_Test_Pwm(void)
+{
+	sys_test_pwm =! sys_test_pwm;
+	GPIO_WriteBit(SPI_CM_PORT, SPIMISO, sys_test_pwm);
 }

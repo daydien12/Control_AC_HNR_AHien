@@ -1,13 +1,14 @@
 #include "adc_lib.h"
-
-volatile uint8_t count_empty_time;
-volatile _adc_value_t_ Adc_VarArr;
-static uint32_t Arr_Channel[6] = {ADC_Channel_0, ADC_Channel_1, ADC_Channel_2, ADC_Channel_3, ADC_Channel_8, ADC_Channel_9};
-static _adc_channel_e channel_read_all = ADC_Channel_0_OUT_ADC_1;
-static void read_adc_all(uint16_t *_data_, const _adc_channel_e _adc_channel_, _adc_kalman_filter_t_ *_kamal_var);
-_adc_kalman_filter_t_ Kalman_OUT_ADC_1, Kalman_OUT_ADC_2, Kalman_OUT_ADC_3, Kalman_LM35, Kalman_ADC_M1, Kalman_ADC_M2;
+#include "sys_lib.h"
 
 uint16_t NUMBER_READ_ADC = 0; 
+volatile uint8_t count_empty_time;
+volatile _adc_value_t_ Adc_VarArr;
+static _adc_channel_e channel_read_all = ADC_Channel_0_OUT_ADC_1;
+static uint32_t Arr_Channel[6] = {ADC_Channel_0, ADC_Channel_1, ADC_Channel_2, ADC_Channel_3, ADC_Channel_8, ADC_Channel_9};
+_adc_kalman_filter_t_ Kalman_OUT_ADC_1, Kalman_OUT_ADC_2, Kalman_OUT_ADC_3, Kalman_LM35, Kalman_ADC_M1, Kalman_ADC_M2;
+
+static void read_adc_all(uint16_t *_data_, const _adc_channel_e _adc_channel_, _adc_kalman_filter_t_ *_kamal_var);
 
 void ADC_Init_All(void)
 {
@@ -26,7 +27,7 @@ void ADC_Init_All(void)
 //  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
 //  GPIO_Init(ADC_M1_M2_PORT, &GPIO_InitStructure);
 
-  ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;
+  ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
   ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
   ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
   ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
@@ -39,16 +40,17 @@ void ADC_Init_All(void)
   ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
 
   NVIC_EnableIRQ(ADC1_COMP_IRQn);
-
   ADC_Cmd(ADC1, ENABLE);
 
   while (!ADC_GetFlagStatus(ADC1, ADC_FLAG_ADRDY));
 	Kalman_OUT_ADC_1.init_data = 0;
+	ADC1->SMPR = ADC_SampleTime_239_5Cycles;
+	ADC_StartOfConversion(ADC1);
 }
 
 static void read_adc_all(uint16_t *_data_, const _adc_channel_e _adc_channel_, _adc_kalman_filter_t_  *_kamal_var)
 {
-	if(count_empty_time >= 20)
+	if(count_empty_time >= 2)
 	{
 		if (Adc_VarArr.adc_config == 0)
 		{
@@ -66,7 +68,7 @@ static void read_adc_all(uint16_t *_data_, const _adc_channel_e _adc_channel_, _
 				count_empty_time = 0;
 				Adc_VarArr.adc_config = 0;
 				//*_data_ = ADC_Kalman_Filter(Adc_VarArr.adc_value, _kamal_var);
-				*_data_ = Adc_VarArr.adc_value;//ADC_Kalman_Filter(Adc_VarArr.adc_value, _kamal_var);
+				*_data_ = Adc_VarArr.adc_value;
 				channel_read_all = _adc_channel_;
 			}
 		}
@@ -94,7 +96,12 @@ uint16_t ADC_Read_One_Channel(const _adc_channel_e ADC_Channel, const uint32_t A
 
 void ADC_Read_All(uint16_t *_adc_arr_data_)
 {
-  ADC1->SMPR = ADC_SampleTime_239_5Cycles;
+ 
+	NUMBER_READ_ADC = 900;
+	read_adc_all(&_adc_arr_data_[0], ADC_Channel_1_OUT_ADC_2, &Kalman_OUT_ADC_1);
+	Adc_VarArr.adc_flag_ReadALL = 1;
+
+	/*
 	switch (channel_read_all)
 	{
 		case ADC_Channel_0_OUT_ADC_1:
@@ -130,14 +137,17 @@ void ADC_Read_All(uint16_t *_adc_arr_data_)
 			Adc_VarArr.adc_flag_ReadALL = 1;
 			break;
 	}
+	*/
 	
 }
 
 uint16_t ADC_Kalman_Filter(unsigned long ADC_Value, _adc_kalman_filter_t_ *_adc_kalman_)
 {
+		
+	  float Z_k;
 		float x_k1_k1,x_k_k1;
 		uint16_t kalman_adc;
-	  float Z_k;
+	
 		if(_adc_kalman_->init_data == 0)
 		{
 			_adc_kalman_->ADC_OLD_Value = 0.0;
@@ -167,18 +177,23 @@ uint16_t ADC_Kalman_Filter(unsigned long ADC_Value, _adc_kalman_filter_t_ *_adc_
 	return kalman_adc;
 }
 
-/*one time reading adc costs 41 us.*/
+/*one time reading adc costs 41 us. 8Mhz*/
 /* 500*41 = 20500 -> 20ms -> 50hz*/
+
+/*one time reading adc costs 23 us. 48Mhz*/
+/* 900*23 = 20700 -> 20ms -> 50hz*/
+
 void ADC1_IRQHandler()
 {
 	uint16_t tempadc = 0;
+	//SYS_Test_Pwm();
   if (ADC_GetITStatus(ADC1, ADC_IT_EOC))
   {
     ADC_ClearITPendingBit(ADC1, ADC_IT_EOC);
     if (Adc_VarArr.adc_count >= NUMBER_READ_ADC)
     {
       Adc_VarArr.adc_flag = 1;
-      ADC_StopOfConversion(ADC1);
+      //ADC_StopOfConversion(ADC1);
     }
     else
     {
@@ -187,8 +202,8 @@ void ADC1_IRQHandler()
 			{
 				Adc_VarArr.adc_value = tempadc;
 			}
-      ADC_DiscModeCmd(ADC1, ENABLE);
-      ADC_StartOfConversion(ADC1);
+      //ADC_DiscModeCmd(ADC1, ENABLE);
+      ///ADC_StartOfConversion(ADC1);
       Adc_VarArr.adc_count ++; 
 		}
 	}
